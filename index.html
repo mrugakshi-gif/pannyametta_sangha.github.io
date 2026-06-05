@@ -1,0 +1,2231 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Pannya Metta Sangha</title>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Lora:ital,wght@0,400;0,500;1,400&family=Nunito:wght@300;400;600;700&display=swap" rel="stylesheet">
+<style>
+/* ═══════════════════════════════════════════════
+   ROOT & RESET
+═══════════════════════════════════════════════ */
+:root{
+  --blue-deep:#0a1628;--blue-mid:#1a3a6b;--blue-bright:#2563eb;
+  --blue-light:#60a5fa;--blue-pale:#dbeafe;
+  --gold:#f59e0b;--gold-light:#fcd34d;
+  --white:#ffffff;--text-dark:#1e293b;--text-mid:#475569;
+  --shadow:0 8px 32px rgba(10,22,40,0.18);
+}
+*{margin:0;padding:0;box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+body{font-family:'Nunito',sans-serif;background:#f0f6ff;color:var(--text-dark);overflow-x:hidden;}
+
+/* ═══════ SPLASH SCREEN — Enhanced ═══════ */
+#splashScreen{
+  position:fixed;inset:0;z-index:9999;
+  background:linear-gradient(135deg,#020d1e 0%,#0a1628 40%,#1a3a6b 70%,#2563eb 100%);
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  transition:opacity 1s ease, visibility 1s ease;
+  overflow:hidden;
+}
+#splashScreen.fade-out{opacity:0;visibility:hidden;pointer-events:none;}
+
+/* Animated star/particle background */
+.splash-particles{position:absolute;inset:0;pointer-events:none;overflow:hidden;}
+.splash-particle{position:absolute;border-radius:50%;background:rgba(245,158,11,0.6);animation:particleFloat linear infinite;}
+@keyframes particleFloat{
+  0%{transform:translateY(100vh) scale(0);opacity:0;}
+  10%{opacity:1;}
+  90%{opacity:0.5;}
+  100%{transform:translateY(-20vh) scale(1.2);opacity:0;}
+}
+
+/* Mandala rings */
+.splash-mandala{position:absolute;width:600px;height:600px;left:50%;top:50%;transform:translate(-50%,-50%);pointer-events:none;}
+.splash-ring{position:absolute;border-radius:50%;border:1px solid rgba(245,158,11,0.12);left:50%;top:50%;transform:translate(-50%,-50%);animation:mandalaRotate linear infinite;}
+.splash-ring:nth-child(1){width:200px;height:200px;border-color:rgba(245,158,11,0.25);animation-duration:8s;}
+.splash-ring:nth-child(2){width:300px;height:300px;border-color:rgba(245,158,11,0.18);animation-duration:12s;animation-direction:reverse;}
+.splash-ring:nth-child(3){width:420px;height:420px;border-color:rgba(245,158,11,0.12);animation-duration:18s;}
+.splash-ring:nth-child(4){width:560px;height:560px;border-color:rgba(245,158,11,0.07);animation-duration:25s;animation-direction:reverse;}
+.splash-ring::before{content:'';position:absolute;width:8px;height:8px;border-radius:50%;background:var(--gold);top:-4px;left:50%;transform:translateX(-50%);box-shadow:0 0 8px var(--gold);}
+@keyframes mandalaRotate{from{transform:translate(-50%,-50%) rotate(0deg);}to{transform:translate(-50%,-50%) rotate(360deg);}}
+
+/* Radial light burst */
+.splash-burst{position:absolute;width:400px;height:400px;left:50%;top:50%;transform:translate(-50%,-50%);background:radial-gradient(circle,rgba(245,158,11,0.08) 0%,transparent 70%);animation:burstPulse 3s ease-in-out infinite;pointer-events:none;}
+@keyframes burstPulse{0%,100%{transform:translate(-50%,-50%) scale(1);opacity:0.5;}50%{transform:translate(-50%,-50%) scale(1.4);opacity:1;}}
+
+.splash-inner{text-align:center;position:relative;z-index:10;animation:splashFadeIn 1.2s cubic-bezier(0.16,1,0.3,1) forwards;}
+@keyframes splashFadeIn{from{opacity:0;transform:translateY(40px);}to{opacity:1;transform:translateY(0);}}
+
+.splash-logo-wrap{position:relative;display:inline-block;margin-bottom:28px;}
+.splash-logo{width:110px;height:auto;animation:splashFloat 3.5s ease-in-out infinite, splashGlow 2s ease-in-out infinite alternate;display:block;}
+@keyframes splashFloat{0%,100%{transform:translateY(0) rotate(-2deg);}50%{transform:translateY(-16px) rotate(2deg);}}
+@keyframes splashGlow{from{filter:drop-shadow(0 0 10px rgba(245,158,11,0.4)) drop-shadow(0 0 30px rgba(37,99,235,0.3));}to{filter:drop-shadow(0 0 24px rgba(245,158,11,1)) drop-shadow(0 0 50px rgba(245,158,11,0.4));}}
+
+.splash-logo-ring{position:absolute;inset:-16px;border-radius:50%;border:2px solid rgba(245,158,11,0.3);animation:splashRingExpand 2.5s ease-in-out infinite;}
+.splash-logo-ring2{position:absolute;inset:-32px;border-radius:50%;border:1px solid rgba(245,158,11,0.15);animation:splashRingExpand 2.5s ease-in-out infinite 0.5s;}
+@keyframes splashRingExpand{0%{transform:scale(0.85);opacity:0;}50%{opacity:1;}100%{transform:scale(1.15);opacity:0;}}
+
+.splash-title{font-family:'Cinzel',serif;font-size:clamp(1.6rem,4.5vw,2.6rem);color:#fff;font-weight:700;letter-spacing:2px;margin-bottom:8px;text-shadow:0 2px 30px rgba(0,0,0,.6);animation:titleReveal 1.5s cubic-bezier(0.16,1,0.3,1) 0.3s both;}
+@keyframes titleReveal{from{opacity:0;letter-spacing:8px;transform:translateY(10px);}to{opacity:1;letter-spacing:2px;transform:translateY(0);}}
+
+.splash-sub{color:var(--gold-light);font-size:.85rem;letter-spacing:4px;text-transform:uppercase;font-weight:700;margin-bottom:8px;animation:fadeUp 1s ease 0.7s both;}
+.splash-tagline{color:rgba(200,220,255,0.7);font-size:.82rem;letter-spacing:2px;font-style:italic;margin-bottom:32px;animation:fadeUp 1s ease 0.9s both;}
+@keyframes fadeUp{from{opacity:0;transform:translateY(14px);}to{opacity:1;transform:translateY(0);}}
+
+.splash-divider{display:flex;align-items:center;gap:14px;justify-content:center;margin-bottom:24px;animation:fadeUp 1s ease 1s both;}
+.splash-divider-line{width:60px;height:1px;background:linear-gradient(90deg,transparent,rgba(245,158,11,0.6));}
+.splash-divider-line.r{background:linear-gradient(90deg,rgba(245,158,11,0.6),transparent);}
+.splash-dharma{font-size:1.4rem;color:var(--gold);}
+
+.splash-dots{display:flex;gap:10px;justify-content:center;margin-bottom:28px;animation:fadeUp 1s ease 1.1s both;}
+.splash-dot{width:8px;height:8px;border-radius:50%;background:var(--gold-light);animation:dotPulse 1.6s ease-in-out infinite;}
+.splash-dot:nth-child(2){animation-delay:.25s;}
+.splash-dot:nth-child(3){animation-delay:.5s;}
+.splash-dot:nth-child(4){animation-delay:.75s;}
+.splash-dot:nth-child(5){animation-delay:1s;}
+@keyframes dotPulse{0%,100%{opacity:.25;transform:scale(0.7);}50%{opacity:1;transform:scale(1.3);}}
+
+.splash-progress{width:220px;margin:0 auto;animation:fadeUp 1s ease 1.2s both;}
+.splash-progress-track{height:2px;background:rgba(255,255,255,.1);border-radius:2px;overflow:hidden;margin-bottom:12px;}
+.splash-progress-fill{height:100%;background:linear-gradient(90deg,var(--gold),var(--gold-light),#fff);border-radius:2px;animation:progressFill 5.5s linear forwards;}
+@keyframes progressFill{from{width:0%;}to{width:100%;}}
+.splash-progress-label{color:rgba(200,220,255,0.5);font-size:.7rem;letter-spacing:3px;text-transform:uppercase;}
+
+.splash-skip{position:absolute;bottom:28px;right:32px;color:rgba(200,220,255,0.4);font-size:.75rem;cursor:pointer;letter-spacing:2px;text-transform:uppercase;padding:6px 14px;border:1px solid rgba(255,255,255,.1);border-radius:16px;transition:all .3s;z-index:20;}
+.splash-skip:hover{color:rgba(200,220,255,0.8);border-color:rgba(255,255,255,.3);}
+
+/* PAGE SYSTEM */
+.subpage{display:none;}
+.subpage.active{display:block;}
+#mainSite{display:block;}
+#mainSite.hidden{display:none;}
+
+/* HEADER */
+header{
+  position:sticky;top:0;z-index:1000;
+  background:linear-gradient(135deg,#0a1628 0%,#1a3a6b 50%,#2563eb 100%);
+  box-shadow:0 4px 24px rgba(10,22,40,0.35);
+  padding:0 2rem;height:70px;
+  display:flex;align-items:center;justify-content:space-between;
+}
+.header-left{display:flex;align-items:center;gap:14px;}
+.logo-circle{
+  width:46px;height:46px;border-radius:50%;
+  background:linear-gradient(135deg,var(--gold),var(--gold-light));
+  display:flex;align-items:center;justify-content:center;
+  font-size:40px;box-shadow:0 0 0 3px rgba(245,158,11,0.3);
+  flex-shrink:0;cursor:pointer;transition:transform .25s;overflow:hidden;
+}
+.logo-circle:hover{transform:scale(1.08);}
+.org-title{font-family:'Cinzel',serif;font-size:1.05rem;font-weight:600;color:var(--white);letter-spacing:.5px;line-height:1.2;text-shadow:0 1px 4px rgba(0,0,0,.3);}
+.org-subtitle{font-size:.65rem;color:var(--gold-light);letter-spacing:1px;text-transform:uppercase;}
+nav{display:flex;align-items:center;gap:6px;}
+nav a{color:rgba(255,255,255,.88);text-decoration:none;font-size:.88rem;font-weight:600;padding:6px 12px;border-radius:20px;transition:all .25s;letter-spacing:.3px;cursor:pointer;}
+nav a:hover{background:rgba(255,255,255,.15);color:#fff;}
+
+/* Language Dropdown */
+.lang-wrapper{position:relative;}
+.lang-btn{
+  background:rgba(245,158,11,.2);border:1px solid rgba(245,158,11,.5);
+  color:var(--gold-light);padding:6px 14px;border-radius:20px;
+  font-size:1rem;cursor:pointer;transition:all .25s;
+  font-family:'Nunito',sans-serif;letter-spacing:.3px;
+  display:flex;align-items:center;gap:6px;
+}
+.lang-btn:hover{background:rgba(245,158,11,.35);border-color:var(--gold);color:#fff;}
+.lang-dropdown{
+  position:absolute;top:calc(100% + 8px);right:0;
+  background:linear-gradient(135deg,#0a1628,#1a3a6b);
+  border:1px solid rgba(245,158,11,.3);border-radius:12px;
+  overflow:hidden;min-width:140px;
+  box-shadow:0 12px 32px rgba(0,0,0,.5);
+  opacity:0;pointer-events:none;transform:translateY(-8px);
+  transition:all .25s;z-index:2000;
+}
+.lang-wrapper:hover .lang-dropdown,.lang-dropdown:hover{opacity:1;pointer-events:all;transform:translateY(0);}
+.lang-option{display:block;width:100%;padding:10px 16px;color:rgba(255,255,255,.85);
+  font-size:.88rem;font-weight:600;cursor:pointer;border:none;background:none;
+  font-family:'Nunito',sans-serif;text-align:left;transition:background .2s;}
+.lang-option:hover{background:rgba(255,255,255,.12);color:#fff;}
+.lang-option.active-lang{color:var(--gold-light);}
+
+/* HERO */
+.hero{
+  min-height:60vh;
+  background:linear-gradient(135deg,#0a1628 0%,#1a3a6b 55%,#2563eb 100%);
+  display:flex;align-items:center;justify-content:center;
+  text-align:center;padding:80px 2rem;
+  position:relative;overflow:hidden;
+}
+.hero-bg-img{position:absolute;inset:0;background-image:url('');background-size:cover;background-position:center;opacity:0.13;z-index:0;}
+.hero::before{content:'';position:absolute;inset:0;background:url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none'%3E%3Cg fill='%23ffffff' fill-opacity='0.04'%3E%3Ccircle cx='30' cy='30' r='2'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");z-index:1;}
+.hero-content{position:relative;z-index:2;max-width:700px;}
+.hero-dharma{font-size:3rem;margin-bottom:16px;animation:float 4s ease-in-out infinite;display:block;}
+@keyframes float{0%,100%{transform:translateY(0);}50%{transform:translateY(-10px);}}
+.hero h1{font-family:'Cinzel',serif;font-size:clamp(1.8rem,4vw,3rem);color:var(--white);font-weight:700;margin-bottom:12px;text-shadow:0 2px 20px rgba(0,0,0,.4);line-height:1.2;}
+.hero-tagline{font-size:1rem;color:var(--gold-light);letter-spacing:3px;text-transform:uppercase;margin-bottom:20px;font-weight:600;}
+.hero-desc{color:rgba(255,255,255,.8);font-size:1.05rem;line-height:1.7;max-width:560px;margin:0 auto;}
+
+/* SECTION COMMONS */
+section{padding:80px 2rem;}
+.container{max-width:1100px;margin:0 auto;}
+.section-label{font-family:'Cinzel',serif;font-size:.75rem;letter-spacing:3px;text-transform:uppercase;color:var(--blue-bright);margin-bottom:8px;font-weight:600;}
+.section-title{font-family:'Cinzel',serif;font-size:clamp(1.5rem,3vw,2.2rem);color:var(--blue-deep);margin-bottom:40px;font-weight:700;}
+.section-title.center{text-align:center;}
+.divider{width:60px;height:3px;background:linear-gradient(90deg,var(--blue-bright),var(--gold));border-radius:3px;margin:0 auto 32px;}
+
+/* INTRO GRID */
+.intro-grid{display:grid;grid-template-columns:1fr 1fr;gap:60px;align-items:center;margin-bottom:80px;}
+.intro-grid.reverse{direction:rtl;}
+.intro-grid.reverse>*{direction:ltr;}
+.intro-photo-side{display:flex;flex-direction:column;align-items:center;gap:18px;}
+.photo-circle{width:200px;height:200px;border-radius:50%;overflow:hidden;box-shadow:0 0 0 6px var(--blue-pale),0 0 0 10px var(--blue-bright),var(--shadow);transition:transform .4s;flex-shrink:0;}
+.photo-circle:hover{transform:scale(1.04);}
+.photo-circle img{width:100%;height:100%;object-fit:cover;object-position:center top;display:block;}
+.photo-placeholder{width:200px;height:200px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:5rem;box-shadow:0 0 0 6px var(--blue-pale),0 0 0 10px var(--blue-bright),var(--shadow);transition:transform .4s;}
+.photo-placeholder:hover{transform:scale(1.04);}
+.photo-placeholder.gold-bg{background:linear-gradient(135deg,#f59e0b,#fcd34d);}
+.photo-placeholder.blue-bg{background:linear-gradient(135deg,#1a3a6b,#2563eb);}
+.photo-name{font-family:'Cinzel',serif;font-size:1rem;color:var(--blue-mid);text-align:center;font-weight:600;max-width:220px;line-height:1.4;}
+.intro-text h2{font-family:'Cinzel',serif;font-size:1.7rem;color:var(--blue-deep);margin-bottom:16px;}
+.intro-text p{color:var(--text-mid);line-height:1.8;margin-bottom:14px;font-size:.97rem;}
+.badge-row{display:flex;flex-wrap:wrap;gap:10px;margin-top:20px;}
+.badge{background:var(--blue-pale);color:var(--blue-bright);padding:5px 14px;border-radius:20px;font-size:.8rem;font-weight:700;letter-spacing:.5px;}
+
+
+/* INITIATIVES */
+.initiatives-section{background:linear-gradient(135deg,#0a1628 0%,#1a3a6b 100%);padding:80px 2rem;}
+.initiatives-section .section-title{color:var(--white);}
+.initiatives-section .section-label{color:var(--gold-light);}
+.cards-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:28px;}
+.cards-grid-2{display:grid;grid-template-columns:repeat(2,1fr);gap:28px;}
+.cards-grid-4{display:grid;grid-template-columns:repeat(4,1fr);gap:24px;}
+.cards-grid-6{display:grid;grid-template-columns:repeat(3,1fr);gap:28px;}
+.card{background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.12);border-radius:16px;overflow:hidden;cursor:pointer;transition:all .35s cubic-bezier(.16,1,.3,1);backdrop-filter:blur(10px);}
+.card:hover{transform:translateY(-10px);background:rgba(255,255,255,.13);border-color:rgba(245,158,11,.4);box-shadow:0 20px 60px rgba(0,0,0,.4),0 0 0 1px rgba(245,158,11,.2);}
+.card-img{width:100%;height:300px;overflow:hidden;position:relative;background:linear-gradient(135deg,rgba(26,58,107,.5),rgba(37,99,235,.3));}
+.card-img img{width:100%;height:100%;object-fit:cover;object-position:center;display:block;transition:transform .5s ease;}
+.card:hover .card-img img{transform:scale(1.07);}
+.card-img::after{content:'';position:absolute;inset:0;background:linear-gradient(to bottom,transparent 50%,rgba(10,22,40,.55) 100%);}
+.card-img-placeholder{width:100%;height:300px;display:flex;align-items:center;justify-content:center;font-size:3.5rem;}
+.card-body{padding:22px;}
+.card-title{font-family:'Cinzel',serif;font-size:1rem;color:var(--white);margin-bottom:10px;font-weight:600;}
+.card-desc{color:rgba(200,220,255,.8);font-size:.875rem;line-height:1.6;margin-bottom:14px;}
+.card-cta{color:var(--gold-light);font-size:.8rem;font-weight:700;letter-spacing:1px;text-transform:uppercase;}
+
+/* PROJECTS SECTION */
+.projects-cards-section{background:linear-gradient(135deg,#020d1e 0%,#0a1628 60%,#1a2550 100%);padding:80px 2rem;}
+.projects-cards-section .section-title{color:var(--white);}
+.projects-cards-section .section-label{color:var(--gold-light);}
+.project-card{background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.1);border-radius:14px;overflow:hidden;cursor:pointer;transition:all .35s;backdrop-filter:blur(8px);}
+.project-card:hover{transform:translateY(-8px);background:rgba(255,255,255,.1);border-color:rgba(245,158,11,.35);box-shadow:0 16px 48px rgba(0,0,0,.4);}
+.project-card-img{width:100%;height:150px;overflow:hidden;position:relative;background:linear-gradient(135deg,rgba(37,99,235,.2),rgba(245,158,11,.1));}
+.project-card-img img{width:100%;height:100%;object-fit:cover;display:block;transition:transform .5s;}
+.project-card:hover .project-card-img img{transform:scale(1.08);}
+.project-card-img::after{content:'';position:absolute;inset:0;background:linear-gradient(to bottom,transparent 40%,rgba(2,13,30,.6));}
+.project-card-icon{position:absolute;bottom:10px;left:14px;font-size:1.8rem;z-index:2;}
+.project-card-body{padding:18px;}
+.project-card-title{font-family:'Cinzel',serif;font-size:.95rem;color:var(--white);margin-bottom:8px;font-weight:600;}
+.project-card-desc{color:rgba(200,220,255,.75);font-size:.82rem;line-height:1.55;margin-bottom:10px;}
+.project-card-cta{color:var(--gold-light);font-size:.75rem;font-weight:700;letter-spacing:1px;text-transform:uppercase;}
+
+/* PHOTO STRIP inside modals */
+.modal-photo-strip{display:grid;grid-template-columns:repeat(2,1fr);gap:8px;margin:18px 0;}
+.modal-photo-strip .ps-img{width:100%;aspect-ratio:1;border-radius:8px;overflow:hidden;background:linear-gradient(135deg,var(--blue-pale),#bfdbfe);display:flex;align-items:center;justify-content:center;font-size:1.6rem;}
+.modal-photo-strip .ps-img img{width:100%;height:100%;object-fit:cover;display:block;}
+
+/* DONATION SECTION */
+.donation-section{
+  background:linear-gradient(135deg,#0a1628 0%,#1a3a6b 50%,#2563eb 100%);
+  padding:80px 2rem;text-align:center;
+}
+.donation-inner{max-width:900px;margin:0 auto;}
+.donation-section .section-label{color:var(--gold-light);}
+.donation-section .section-title{color:var(--white);}
+.donation-desc{color:rgba(200,220,255,.85);line-height:1.8;font-size:1rem;max-width:620px;margin:0 auto 40px;}
+.donation-grid{display:grid;grid-template-columns:1fr 1fr;gap:40px;align-items:start;margin-top:40px;}
+.donation-qr-box{background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.15);border-radius:20px;padding:32px;text-align:center;backdrop-filter:blur(10px);}
+.qr-placeholder{width:180px;height:180px;background:#fff;border-radius:16px;margin:0 auto 20px;overflow:hidden;display:flex;align-items:center;justify-content:center;}
+.qr-placeholder img{width:100%;height:100%;object-fit:contain;}
+.qr-placeholder svg{width:140px;height:140px;}
+.qr-label{color:var(--gold-light);font-family:'Cinzel',serif;font-size:.9rem;font-weight:600;margin-bottom:6px;}
+.qr-sub{color:rgba(200,220,255,.7);font-size:.82rem;}
+.donation-info-box{background:rgba(255,255,255,.06);border:1px solid rgba(245,158,11,.2);border-radius:20px;padding:32px;text-align:left;}
+.donation-info-box h3{font-family:'Cinzel',serif;color:var(--gold-light);font-size:1.2rem;margin-bottom:20px;font-weight:700;}
+.donation-detail{display:flex;gap:14px;margin-bottom:18px;align-items:flex-start;}
+.donation-detail-icon{width:40px;height:40px;background:rgba(245,158,11,.15);border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:1.1rem;flex-shrink:0;}
+.donation-detail-text{color:rgba(200,220,255,.85);font-size:.88rem;line-height:1.6;}
+.donation-detail-label{color:var(--gold-light);font-size:.75rem;font-weight:700;text-transform:uppercase;letter-spacing:.5px;margin-bottom:2px;}
+.donate-btn{display:inline-flex;align-items:center;gap:10px;background:linear-gradient(135deg,var(--gold),var(--gold-light));color:var(--blue-deep);padding:14px 36px;border-radius:30px;font-weight:800;font-size:1rem;cursor:pointer;border:none;font-family:'Cinzel',serif;transition:all .3s;letter-spacing:.5px;text-decoration:none;margin-top:20px;}
+.donate-btn:hover{transform:translateY(-3px);box-shadow:0 12px 32px rgba(245,158,11,.45);}
+.donation-causes{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:20px;}
+.cause-item{background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);border-radius:10px;padding:12px 14px;display:flex;align-items:center;gap:10px;}
+.cause-icon{font-size:1.2rem;}
+.cause-label{color:rgba(200,220,255,.85);font-size:.82rem;font-weight:600;}
+
+/* MAGAZINE SECTION */
+.magazine-section{background:linear-gradient(135deg,#f0f6ff,#dbeafe);padding:80px 2rem;}
+.magazine-grid{display:grid;grid-template-columns:1fr 1fr;gap:48px;align-items:start;}
+.mag-col{background:#fff;border-radius:20px;padding:36px;box-shadow:0 4px 24px rgba(37,99,235,.1);}
+.mag-col-header{display:flex;align-items:center;gap:14px;margin-bottom:24px;padding-bottom:20px;border-bottom:2px solid var(--blue-pale);}
+.mag-col-icon{width:52px;height:52px;border-radius:14px;display:flex;align-items:center;justify-content:center;font-size:1.8rem;flex-shrink:0;}
+.mag-icon-blue{background:linear-gradient(135deg,var(--blue-pale),#bfdbfe);}
+.mag-icon-red{background:linear-gradient(135deg,#fef3c7,#fde68a);}
+.mag-col-title{font-family:'Cinzel',serif;font-size:1.15rem;color:var(--blue-deep);font-weight:700;margin-bottom:4px;}
+.mag-col-sub{color:var(--text-mid);font-size:.82rem;}
+.mag-item{display:flex;align-items:center;gap:16px;padding:16px;border-radius:12px;border:1px solid #e2e8f0;margin-bottom:12px;transition:all .3s;cursor:pointer;}
+.mag-item:hover{border-color:var(--blue-bright);background:#f0f6ff;transform:translateX(4px);}
+.mag-item-year{font-family:'Cinzel',serif;font-size:1.1rem;color:var(--blue-bright);font-weight:700;min-width:48px;}
+.mag-item-info{flex:1;}
+.mag-item-name{font-weight:700;color:var(--blue-deep);font-size:.9rem;margin-bottom:2px;}
+.mag-item-detail{color:var(--text-mid);font-size:.78rem;}
+.mag-item-badge{padding:4px 10px;border-radius:10px;font-size:.72rem;font-weight:700;text-transform:uppercase;letter-spacing:.5px;white-space:nowrap;}
+.mag-badge-available{background:#dcfce7;color:#16a34a;}
+.mag-badge-upcoming{background:var(--blue-pale);color:var(--blue-bright);}
+.pdf-link{display:inline-flex;align-items:center;gap:8px;background:linear-gradient(135deg,#dc2626,#ef4444);color:#fff;padding:10px 20px;border-radius:10px;font-weight:700;font-size:.85rem;text-decoration:none;transition:all .25s;margin:6px 4px;}
+.pdf-link:hover{transform:translateY(-2px);box-shadow:0 6px 20px rgba(220,38,38,.3);}
+.pdf-link-gold{background:linear-gradient(135deg,#b45309,#d97706);}
+
+/* PRESIDENT SECTION */
+.president-section{background:linear-gradient(135deg,#f5f3ff,#ede9fe);padding:80px 2rem;}
+.president-grid{display:grid;grid-template-columns:300px 1fr;gap:48px;align-items:start;}
+.president-photo-col{text-align:center;}
+.president-photo{width:260px;height:320px;border-radius:20px;object-fit:cover;box-shadow:var(--shadow),0 0 0 4px #fff,0 0 0 8px #7c3aed33;margin-bottom:20px;}
+.president-photo-ph{width:260px;height:320px;border-radius:20px;background:linear-gradient(135deg,#ede9fe,#c4b5fd);display:flex;align-items:center;justify-content:center;font-size:6rem;box-shadow:var(--shadow);margin:0 auto 20px;}
+.president-name{font-family:'Cinzel',serif;font-size:1.1rem;color:#4c1d95;font-weight:700;margin-bottom:4px;}
+.president-role{color:#7c3aed;font-size:.82rem;font-weight:600;text-transform:uppercase;letter-spacing:.5px;}
+.president-timeline{margin-top:24px;}
+.timeline-item{display:flex;gap:18px;margin-bottom:28px;position:relative;}
+.timeline-item::before{content:'';position:absolute;left:17px;top:36px;bottom:-28px;width:2px;background:linear-gradient(to bottom,#7c3aed,transparent);z-index:0;}
+.timeline-item:last-child::before{display:none;}
+.timeline-dot{width:36px;height:36px;border-radius:50%;background:linear-gradient(135deg,#7c3aed,#a78bfa);display:flex;align-items:center;justify-content:center;font-size:1rem;flex-shrink:0;z-index:1;box-shadow:0 2px 8px rgba(124,58,237,.3);}
+.timeline-content{flex:1;}
+.timeline-title{font-family:'Cinzel',serif;font-size:.95rem;color:#4c1d95;font-weight:700;margin-bottom:6px;}
+.timeline-text{color:var(--text-mid);font-size:.87rem;line-height:1.7;}
+.president-text h2{font-family:'Cinzel',serif;font-size:1.7rem;color:#4c1d95;margin-bottom:16px;}
+.president-text p{color:var(--text-mid);line-height:1.8;margin-bottom:14px;font-size:.97rem;}
+
+/* President photo strip */
+.president-photo-strip{display:grid;grid-template-columns:repeat(5,1fr);gap:10px;margin:28px 0;}
+.pps-item{border-radius:10px;overflow:hidden;aspect-ratio:3/4;background:linear-gradient(135deg,#ede9fe,#c4b5fd);display:flex;align-items:center;justify-content:center;font-size:2rem;}
+.pps-item img{width:100%;height:100%;object-fit:cover;display:block;}
+
+
+
+/* MODAL */
+.modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,.75);z-index:3000;display:flex;align-items:center;justify-content:center;padding:20px;opacity:0;pointer-events:none;transition:opacity .3s;backdrop-filter:blur(4px);}
+.modal-overlay.open{opacity:1;pointer-events:all;}
+.modal{background:linear-gradient(135deg,#f0f6ff 0%,#ffffff 100%);border-radius:20px;max-width:680px;width:100%;max-height:85vh;overflow-y:auto;box-shadow:0 30px 80px rgba(0,0,0,.5);transform:scale(.9) translateY(20px);transition:all .35s cubic-bezier(.16,1,.3,1);}
+.modal-overlay.open .modal{transform:scale(1) translateY(0);}
+.modal-header{background:linear-gradient(135deg,#0a1628,#2563eb);padding:30px;position:relative;border-radius:20px 20px 0 0;}
+.modal-title{font-family:'Cinzel',serif;color:#fff;font-size:1.4rem;font-weight:700;}
+.modal-subtitle{color:var(--gold-light);font-size:.85rem;margin-top:4px;letter-spacing:.5px;}
+.modal-close{position:absolute;top:18px;right:18px;background:rgba(255,255,255,.15);border:none;cursor:pointer;color:#fff;font-size:1.3rem;width:36px;height:36px;border-radius:50%;display:flex;align-items:center;justify-content:center;transition:background .2s;}
+.modal-close:hover{background:rgba(255,255,255,.3);}
+.modal-body{padding:30px;}
+.modal-hero-img{width:100%;height:400px;border-radius:12px;overflow:hidden;margin-bottom:24px;box-shadow:0 4px 20px rgba(10,22,40,.18);background:linear-gradient(135deg,#dbeafe,#bfdbfe);}
+.modal-hero-img img{width:100%;height:100%;object-fit:cover;object-position:center;display:block;}
+.modal-img-placeholder{width:100%;height:220px;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:5rem;margin-bottom:24px;}
+.modal-body p{color:var(--text-mid);line-height:1.8;margin-bottom:14px;font-size:.95rem;}
+.modal-body h4{font-family:'Cinzel',serif;color:var(--blue-deep);margin:20px 0 10px;font-size:1rem;}
+.modal-body ul{color:var(--text-mid);padding-left:20px;margin-bottom:14px;}
+.modal-body ul li{margin-bottom:6px;line-height:1.7;font-size:.92rem;}
+.modal-img-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:16px 0;}
+.modal-img-grid img{width:100%;height:140px;object-fit:cover;border-radius:10px;background:#dbeafe;}
+.modal-stat-row{display:flex;gap:16px;flex-wrap:wrap;margin:16px 0;}
+.modal-stat{flex:1;min-width:100px;background:linear-gradient(135deg,#f0f6ff,#dbeafe);border-radius:12px;padding:16px;text-align:center;}
+.modal-stat-num{font-family:'Cinzel',serif;font-size:1.5rem;color:var(--blue-bright);font-weight:700;}
+.modal-stat-label{color:var(--text-mid);font-size:.75rem;margin-top:3px;}
+.modal-tag-row{display:flex;flex-wrap:wrap;gap:8px;margin:14px 0;}
+.modal-tag{background:var(--blue-pale);color:var(--blue-bright);padding:4px 12px;border-radius:10px;font-size:.78rem;font-weight:700;}
+
+/* ABOUT */
+.about-section{background:linear-gradient(135deg,#f0f6ff,#dbeafe);text-align:center;}
+.about-content{max-width:780px;margin:0 auto;}
+.about-content p{color:var(--text-mid);line-height:1.9;font-size:1rem;margin-bottom:18px;}
+.values-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;margin-top:40px;text-align:center;}
+.value-card{background:#fff;border-radius:16px;padding:28px 20px;box-shadow:0 4px 20px rgba(37,99,235,.1);transition:all .3s;}
+.value-card:hover{transform:translateY(-6px);box-shadow:0 12px 40px rgba(37,99,235,.18);}
+.value-icon{font-size:2.2rem;margin-bottom:12px;}
+.value-title{font-family:'Cinzel',serif;font-size:.95rem;color:var(--blue-deep);font-weight:700;margin-bottom:8px;}
+.value-desc{color:var(--text-mid);font-size:.85rem;line-height:1.6;}
+
+/* PROJECTS LIST */
+.projects-section{background:#f0f6ff;}
+.projects-list{display:flex;flex-direction:column;gap:16px;max-width:750px;margin:0 auto;}
+.project-item{background:#fff;border-left:4px solid var(--blue-bright);border-radius:0 12px 12px 0;padding:20px 24px;display:flex;align-items:center;gap:20px;box-shadow:0 2px 12px rgba(37,99,235,.08);transition:all .3s;}
+.project-item:hover{transform:translateX(8px);box-shadow:0 6px 24px rgba(37,99,235,.15);border-color:var(--gold);}
+.project-icon{font-size:2rem;flex-shrink:0;}
+.project-name{font-family:'Cinzel',serif;font-size:1rem;color:var(--blue-deep);font-weight:600;}
+.project-desc{color:var(--text-mid);font-size:.85rem;margin-top:3px;}
+
+/* CONTACT */
+.contact-section{background:#fff;}
+.contact-grid{display:grid;grid-template-columns:1fr 1fr;gap:60px;align-items:center;}
+.contact-brand{text-align:center;}
+.contact-logo{font-size:8rem;margin-bottom:20px;}
+.contact-brand-name{font-family:'Cinzel',serif;font-size:1.4rem;color:var(--blue-deep);font-weight:700;margin-bottom:10px;}
+.contact-motto{color:var(--blue-bright);font-size:.9rem;letter-spacing:2px;text-transform:uppercase;font-weight:700;}
+.contact-details h3{font-family:'Cinzel',serif;font-size:1.3rem;color:var(--blue-deep);margin-bottom:24px;}
+.contact-item{display:flex;align-items:flex-start;gap:14px;margin-bottom:20px;}
+.contact-item-icon{width:42px;height:42px;background:var(--blue-pale);border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:1.1rem;flex-shrink:0;}
+.contact-item-text{font-size:.9rem;color:var(--text-mid);line-height:1.5;}
+.contact-item-label{font-weight:700;color:var(--blue-deep);font-size:.8rem;text-transform:uppercase;letter-spacing:.5px;margin-bottom:2px;}
+.social-icons{display:flex;gap:12px;margin-top:20px;justify-content:center;}
+.social-icon{width:42px;height:42px;border-radius:50%;background:var(--blue-pale);display:flex;align-items:center;justify-content:center;font-size:1.2rem;cursor:pointer;transition:all .2s;}
+.social-icon:hover{background:var(--blue-bright);transform:translateY(-3px);}
+.contact-form{margin-top:28px;}
+.contact-form input,.contact-form textarea{width:100%;padding:12px 16px;border:1.5px solid #e2e8f0;border-radius:10px;font-family:'Nunito',sans-serif;font-size:.92rem;color:var(--text-dark);background:#f8fafc;transition:border .2s;margin-bottom:12px;}
+.contact-form input:focus,.contact-form textarea:focus{outline:none;border-color:var(--blue-bright);background:#fff;}
+.contact-form textarea{min-height:90px;resize:vertical;}
+.contact-form button{background:linear-gradient(135deg,var(--blue-mid),var(--blue-bright));color:#fff;padding:12px 30px;border-radius:24px;font-weight:700;font-size:.92rem;cursor:pointer;border:none;font-family:'Nunito',sans-serif;transition:all .25px;}
+.contact-form button:hover{transform:translateY(-2px);box-shadow:0 8px 24px rgba(37,99,235,.3);}
+.map-placeholder{width:100%;height:200px;background:linear-gradient(135deg,var(--blue-pale),#bfdbfe);border-radius:12px;display:flex;align-items:center;justify-content:center;margin-top:20px;font-size:1rem;color:var(--blue-mid);font-weight:600;}
+
+/* UPCOMING PROJECTS */
+.upcoming-section{background:#fff;padding:80px 2rem;}
+.upcoming-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:28px;}
+.upcoming-card{border-radius:16px;overflow:hidden;box-shadow:0 4px 20px rgba(37,99,235,.1);transition:all .3s;cursor:pointer;border:1px solid #e2e8f0;}
+.upcoming-card:hover{transform:translateY(-8px);box-shadow:0 16px 48px rgba(37,99,235,.2);}
+.upcoming-card-img{width:100%;height:180px;overflow:hidden;position:relative;}
+.upcoming-card-img img{width:100%;height:100%;object-fit:cover;display:block;transition:transform .5s;}
+.upcoming-card:hover .upcoming-card-img img{transform:scale(1.06);}
+.upcoming-card-body{padding:20px;background:#fff;}
+.upcoming-card-badge{display:inline-block;background:var(--blue-pale);color:var(--blue-bright);padding:4px 12px;border-radius:12px;font-size:.72rem;font-weight:700;letter-spacing:.5px;margin-bottom:10px;}
+.upcoming-card-title{font-family:'Cinzel',serif;font-size:1rem;color:var(--blue-deep);margin-bottom:8px;font-weight:700;}
+.upcoming-card-desc{color:var(--text-mid);font-size:.84rem;line-height:1.6;margin-bottom:12px;}
+.upcoming-card-subtopics{display:flex;flex-wrap:wrap;gap:6px;}
+.subtopic-tag{background:#f0f6ff;border:1px solid #bfdbfe;color:var(--blue-mid);padding:3px 10px;border-radius:10px;font-size:.75rem;font-weight:600;}
+
+/* FOOTER */
+footer{background:linear-gradient(135deg,#020d1e 0%,#0a1628 60%,#1a3a6b 100%);padding:30px 2rem;text-align:center;}
+footer p{color:rgba(200,220,255,.6);font-size:.85rem;}
+.footer-title{font-family:'Cinzel',serif;color:var(--gold-light);font-size:1rem;margin-bottom:8px;letter-spacing:1px;}
+
+/* LANGUAGE TOGGLE */
+[data-ja]{display:none;}
+body.ja [data-en]{display:none;}
+body.ja [data-ja]{display:revert;}
+
+/* SUB-PAGE STYLES */
+.subpage{padding:0;}
+.sp-hero{padding:80px 2rem;text-align:center;position:relative;overflow:hidden;}
+.sp-hero::before{content:'';position:absolute;inset:0;pointer-events:none;z-index:1;}
+.sp-hero-bg{position:absolute;inset:0;background-size:cover;background-position:center;opacity:0.18;z-index:0;}
+.sp-feb6{background:linear-gradient(135deg,#0a1628,#1a3a6b,#2563eb);}
+.sp-feb7{background:linear-gradient(135deg,#0a1628,#1a3a6b,#065f46);}
+.sp-feb8{background:linear-gradient(135deg,#0a1628,#4c1d95,#7c3aed);}
+.sp-feb9{background:linear-gradient(135deg,#0a1628,#92400e,#d97706);}
+.sp-buddhism{background:linear-gradient(135deg,#0a1628,#1a3a6b,#d97706);}
+.sp-about{background:linear-gradient(135deg,#0a1628,#1e3a5f,#2563eb);}
+.sp-president{background:linear-gradient(135deg,#1a0a28,#3a1a6b,#6b21a8);}
+.sp-horisawa{background:linear-gradient(135deg,#0a2818,#1a6b3a,#059669);}
+.sp-school{background:linear-gradient(135deg,#1a280a,#3a6b1a,#65a30d);}
+.sp-social{background:linear-gradient(135deg,#280a0a,#6b1a1a,#dc2626);}
+.sp-magazine{background:linear-gradient(135deg,#0a1628,#1a2a4b,#3b4f7a);}
+.sp-essay{background:linear-gradient(135deg,#1a0a1a,#4b1a6b,#7c3aed);}
+.sp-hq{background:linear-gradient(135deg,#0a1628,#1a3a6b,#2563eb);}
+.sp-balaghat{background:linear-gradient(135deg,#0a2010,#1a5030,#059669);}
+.date-badge{display:inline-block;padding:6px 20px;border-radius:20px;font-size:.8rem;font-weight:700;letter-spacing:2px;text-transform:uppercase;margin-bottom:20px;position:relative;z-index:2;}
+.b-blue{background:rgba(37,99,235,.2);border:1px solid rgba(37,99,235,.5);color:#93c5fd;}
+.b-green{background:rgba(5,150,105,.2);border:1px solid rgba(5,150,105,.5);color:#6ee7b7;}
+.b-purple{background:rgba(139,92,246,.2);border:1px solid rgba(139,92,246,.5);color:#c4b5fd;}
+.b-gold{background:rgba(245,158,11,.2);border:1px solid rgba(245,158,11,.5);color:var(--gold-light);}
+.b-red{background:rgba(220,38,38,.2);border:1px solid rgba(220,38,38,.5);color:#fca5a5;}
+.sp-hero h1{font-family:'Cinzel',serif;color:#fff;font-size:clamp(1.8rem,4vw,2.8rem);font-weight:700;margin-bottom:14px;text-shadow:0 2px 20px rgba(0,0,0,.4);position:relative;z-index:2;}
+.sp-hero-sub{color:rgba(255,255,255,.78);font-size:1rem;max-width:600px;margin:0 auto;line-height:1.7;position:relative;z-index:2;}
+.sp-content{max-width:900px;margin:0 auto;padding:60px 2rem;}
+.info-card{background:#fff;border-radius:16px;padding:36px;box-shadow:0 4px 24px rgba(37,99,235,.1);margin-bottom:30px;}
+.ic-blue{border-left:4px solid var(--blue-bright);}
+.ic-green{border-left:4px solid #059669;}
+.ic-purple{border-left:4px solid #7c3aed;}
+.ic-gold{border-left:4px solid var(--gold);}
+.ic-red{border-left:4px solid #dc2626;}
+.info-card h2{font-family:'Cinzel',serif;color:var(--blue-deep);font-size:1.3rem;margin-bottom:18px;font-weight:700;}
+.info-card h3{font-family:'Cinzel',serif;color:var(--blue-mid);font-size:1.1rem;margin:18px 0 10px;font-weight:600;}
+.info-card p{color:#475569;line-height:1.8;margin-bottom:14px;font-size:.97rem;}
+.info-card ul{color:#475569;padding-left:24px;line-height:2;}
+.info-card ul li{margin-bottom:6px;}
+.img-grid-2{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin:20px 0;}
+.img-grid-3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:14px;margin:20px 0;}
+.img-grid-4{display:grid;grid-template-columns:1fr 1fr 1fr 1fr;gap:12px;margin:20px 0;}
+.img-grid-2 img,.img-grid-3 img,.img-grid-4 img{width:100%;border-radius:10px;object-fit:cover;background:#dbeafe;}
+.img-grid-2 img{height:180px;}
+.img-grid-3 img{height:150px;}
+.img-grid-4 img{height:120px;}
+/* Photo strips in info cards */
+.photo-strip-5{display:grid;grid-template-columns:repeat(5,1fr);gap:8px;margin:18px 0;}
+.photo-strip-5 .ps-ph{border-radius:8px;overflow:hidden;aspect-ratio:4/3;display:flex;align-items:center;justify-content:center;font-size:1.4rem;}
+.photo-strip-5 .ps-ph img{width:100%;height:100%;object-fit:cover;display:block;}
+.teacher-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;margin:24px 0;}
+.teacher-card{background:#f8fafc;border-radius:14px;padding:22px;text-align:center;border:1px solid #e2e8f0;}
+.teacher-photo{width:90px;height:90px;border-radius:50%;object-fit:cover;margin:0 auto 12px;display:block;border:3px solid var(--blue-pale);background:#dbeafe;}
+.teacher-photo-ph{width:90px;height:90px;border-radius:50%;background:linear-gradient(135deg,var(--blue-pale),#bfdbfe);display:flex;align-items:center;justify-content:center;margin:0 auto 12px;font-size:2rem;}
+.teacher-name{font-family:'Cinzel',serif;font-size:.95rem;color:var(--blue-deep);font-weight:700;margin-bottom:4px;}
+.teacher-subject{color:var(--blue-bright);font-size:.82rem;font-weight:600;margin-bottom:8px;}
+.teacher-bio{color:var(--text-mid);font-size:.82rem;line-height:1.5;}
+.sch-grid{display:grid;grid-template-columns:1fr 1fr;gap:20px;margin-top:14px;}
+.si{border-radius:12px;padding:18px;}
+.si-blue{background:linear-gradient(135deg,#f0f6ff,#dbeafe);border:1px solid #bfdbfe;}
+.si-green{background:linear-gradient(135deg,#ecfdf5,#d1fae5);border:1px solid #6ee7b7;}
+.si-purple{background:linear-gradient(135deg,#f5f3ff,#ede9fe);border:1px solid #c4b5fd;}
+.si-gold{background:linear-gradient(135deg,#fffbeb,#fef3c7);border:1px solid #fcd34d;}
+.st{font-family:'Cinzel',serif;font-size:.95rem;font-weight:700;margin-bottom:4px;}
+.st-blue{color:var(--blue-bright);}
+.st-green{color:#059669;}
+.st-purple{color:#7c3aed;}
+.st-gold{color:#b45309;}
+.se{color:var(--blue-deep);font-size:.9rem;font-weight:600;}
+.sd{color:#64748b;font-size:.82rem;margin-top:4px;}
+.leader-grid{display:grid;grid-template-columns:220px 1fr;gap:36px;align-items:start;margin-bottom:24px;}
+.leader-photo{width:200px;height:240px;border-radius:16px;object-fit:cover;box-shadow:var(--shadow);background:#dbeafe;}
+.leader-photo-ph{width:200px;height:240px;border-radius:16px;background:linear-gradient(135deg,var(--blue-pale),#bfdbfe);display:flex;align-items:center;justify-content:center;font-size:5rem;box-shadow:var(--shadow);}
+.stats-row{display:flex;gap:24px;flex-wrap:wrap;margin:24px 0;}
+.stat-box{flex:1;min-width:120px;background:linear-gradient(135deg,#f0f6ff,#dbeafe);border-radius:14px;padding:20px;text-align:center;}
+.stat-num{font-family:'Cinzel',serif;font-size:1.8rem;color:var(--blue-bright);font-weight:700;}
+.stat-label{color:var(--text-mid);font-size:.8rem;margin-top:4px;}
+.achievement-list{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin:16px 0;}
+.ach-item{background:#f8fafc;border-radius:12px;padding:18px;border:1px solid #e2e8f0;display:flex;gap:14px;align-items:flex-start;}
+.ach-icon{font-size:1.8rem;flex-shrink:0;}
+.ach-title{font-family:'Cinzel',serif;font-size:.9rem;color:var(--blue-deep);font-weight:700;margin-bottom:4px;}
+.ach-desc{color:var(--text-mid);font-size:.82rem;line-height:1.5;}
+.hl-box{border-radius:16px;padding:30px;color:#fff;text-align:center;margin:30px 0;}
+.hl-blue{background:linear-gradient(135deg,#0a1628,#1a3a6b);}
+.hl-green{background:linear-gradient(135deg,#065f46,#059669);}
+.hl-purple{background:linear-gradient(135deg,#4c1d95,#7c3aed);}
+.hl-gold{background:linear-gradient(135deg,#92400e,#d97706);}
+.hl-box h3{font-family:'Cinzel',serif;font-size:1.2rem;margin-bottom:10px;}
+.hl-box p{line-height:1.7;opacity:.9;}
+.back-wrap{text-align:center;margin-top:40px;padding-bottom:60px;}
+.back-btn{display:inline-block;background:linear-gradient(135deg,var(--blue-mid),var(--blue-bright));color:#fff;padding:13px 34px;border-radius:24px;font-weight:700;font-size:.92rem;cursor:pointer;border:none;font-family:'Nunito',sans-serif;transition:all .25s;letter-spacing:.3px;margin:6px;}
+.back-btn:hover{transform:translateY(-3px);box-shadow:0 10px 28px rgba(37,99,235,.35);}
+.year-tabs{display:flex;gap:12px;margin-bottom:28px;justify-content:center;}
+.year-tab{padding:10px 36px;border-radius:24px;font-family:'Cinzel',serif;font-size:1.05rem;font-weight:700;cursor:pointer;border:2px solid var(--blue-bright);color:var(--blue-bright);background:#fff;transition:all .25s;box-shadow:0 2px 10px rgba(37,99,235,.1);}
+.year-tab:hover{background:var(--blue-pale);}
+.year-tab.active{background:linear-gradient(135deg,var(--blue-bright),#1a3a6b);border-color:var(--blue-bright);color:#fff;box-shadow:0 4px 18px rgba(37,99,235,.3);}
+.year-content{display:none;}
+.year-content.active{display:block;}
+.closing-banner{background:linear-gradient(135deg,#0a1628,#1a3a6b);border-radius:16px;padding:44px;text-align:center;color:#fff;margin-top:10px;}
+.closing-banner h3{font-family:'Cinzel',serif;color:var(--gold-light);font-size:1.5rem;margin-bottom:12px;}
+.closing-banner p{color:rgba(200,220,255,.85);line-height:1.7;max-width:560px;margin:0 auto 14px;}
+.dharma-spin{font-size:3rem;margin-bottom:16px;animation:spin 12s linear infinite;display:inline-block;}
+@keyframes spin{from{transform:rotate(0deg);}to{transform:rotate(360deg);}}
+
+/* SECTION DIVIDER BAND */
+.section-band{text-align:center;padding:20px 2rem;background:linear-gradient(90deg,var(--blue-deep),var(--blue-mid),var(--blue-bright),var(--blue-mid),var(--blue-deep));}
+.section-band-text{font-family:'Cinzel',serif;color:var(--gold-light);font-size:.75rem;letter-spacing:4px;text-transform:uppercase;font-weight:600;}
+
+/* RESPONSIVE */
+@media(max-width:900px){
+  .cards-grid{grid-template-columns:1fr 1fr;}
+  .cards-grid-4{grid-template-columns:1fr 1fr;}
+  .cards-grid-6{grid-template-columns:1fr 1fr;}
+  .values-grid{grid-template-columns:1fr 1fr;}
+  .teacher-grid{grid-template-columns:1fr 1fr;}
+  .achievement-list{grid-template-columns:1fr;}
+  .president-grid{grid-template-columns:1fr;}
+  .magazine-grid{grid-template-columns:1fr;}
+  .donation-grid{grid-template-columns:1fr;}
+  .upcoming-grid{grid-template-columns:1fr 1fr;}
+  .president-photo-strip{grid-template-columns:repeat(3,1fr);}
+  .modal-photo-strip{grid-template-columns:repeat(3,1fr);}
+}
+@media(max-width:720px){
+  nav a.hm{display:none;}
+  .intro-grid{grid-template-columns:1fr;gap:32px;}
+  .intro-grid.reverse{direction:ltr;}
+  .contact-grid{grid-template-columns:1fr;gap:40px;}
+  .cards-grid{grid-template-columns:1fr;}
+  .cards-grid-2{grid-template-columns:1fr;}
+  .cards-grid-4{grid-template-columns:1fr 1fr;}
+  .cards-grid-6{grid-template-columns:1fr;}
+  .values-grid{grid-template-columns:1fr;}
+  .sch-grid{grid-template-columns:1fr;}
+  .teacher-grid{grid-template-columns:1fr;}
+  .img-grid-3{grid-template-columns:1fr 1fr;}
+  .img-grid-4{grid-template-columns:1fr 1fr;}
+  .leader-grid{grid-template-columns:1fr;}
+  .leader-photo,.leader-photo-ph{width:100%;height:200px;}
+  .upcoming-grid{grid-template-columns:1fr;}
+  .donation-causes{grid-template-columns:1fr;}
+  .president-grid{grid-template-columns:1fr;}
+  .president-photo-col{text-align:center;}
+  .president-photo,.president-photo-ph{margin:0 auto 20px;}
+  .president-photo-strip{grid-template-columns:repeat(2,1fr);}
+  .modal-photo-strip{grid-template-columns:repeat(2,1fr);}
+  .photo-strip-5{grid-template-columns:repeat(3,1fr);}
+}
+</style>
+</head>
+<body>
+
+<!-- ══════════ SPLASH SCREEN — Enhanced ══════════ -->
+<div id="splashScreen">
+  <!-- Animated particles -->
+  <div class="splash-particles" id="splashParticles"></div>
+  <!-- Mandala rings -->
+  <div class="splash-mandala">
+    <div class="splash-ring"></div>
+    <div class="splash-ring"></div>
+    <div class="splash-ring"></div>
+    <div class="splash-ring"></div>
+  </div>
+  <!-- Radial burst -->
+  <div class="splash-burst"></div>
+
+  <div class="splash-inner">
+    <div class="splash-logo-wrap">
+      <div class="splash-logo-ring"></div>
+      <div class="splash-logo-ring2"></div>
+      <img src="pmsimg/logo.png" alt="Pannya Metta Sangha Logo" class="splash-logo" onerror="this.style.fontSize='4rem';this.outerHTML='<div style=\'font-size:4rem;margin-bottom:0;animation:splashFloat 3s ease-in-out infinite,splashGlow 2s ease-in-out infinite alternate\'>☸️</div>'">
+    </div>
+    <div class="splash-title">Pannya Metta Sangha</div>
+    <div class="splash-sub">Wisdom · Compassion · Community</div>
+    <div class="splash-tagline">पन्या मेत्ता संघ — Est. 1982, Nagpur, India</div>
+    <div class="splash-divider">
+      <div class="splash-divider-line"></div>
+      <span class="splash-dharma">☸</span>
+      <div class="splash-divider-line r"></div>
+    </div>
+    <div class="splash-dots">
+      <div class="splash-dot"></div>
+      <div class="splash-dot"></div>
+      <div class="splash-dot"></div>
+      <div class="splash-dot"></div>
+      <div class="splash-dot"></div>
+    </div>
+    <div class="splash-progress">
+      <div class="splash-progress-track"><div class="splash-progress-fill"></div></div>
+      <div class="splash-progress-label">Loading Sacred Space…</div>
+    </div>
+  </div>
+  <div class="splash-skip" onclick="skipSplash()">Skip ›</div>
+</div>
+
+<!-- ══════════════════════════════════════════════
+     MAIN SITE
+══════════════════════════════════════════════ -->
+<div id="mainSite" style="display:none;">
+
+<!-- ══════════ HEADER ══════════ -->
+<header>
+  <div class="header-left">
+    <div class="logo-circle" onclick="showMain()" title="Go Home">
+      <img src="pmsimg/logo.png" alt="Logo" loading="lazy" width="40" height="35" onerror="this.outerHTML='<span style=\'font-size:1.6rem\'>☸️</span>'">
+    </div>
+    <div>
+      <div class="org-title" data-en>Pannya Metta Sangha</div>
+      <div class="org-title" data-ja>パンニャ・メッタ・サンガ</div>
+      <div class="org-subtitle" data-en>Wisdom · Compassion · Community</div>
+      <div class="org-subtitle" data-ja>智慧・慈悲・共同体</div>
+    </div>
+  </div>
+  <nav>
+    <a class="hm" onclick="showMain()" data-en>Home</a>
+    <a class="hm" onclick="showMain()" data-ja>ホーム</a>
+    <a class="hm" onclick="showPage('buddhism')" data-en>Buddhism</a>
+    <a class="hm" onclick="showPage('buddhism')" data-ja>仏教</a>
+    <a class="hm" onclick="showPage('pms-about')" data-en>About</a>
+    <a class="hm" onclick="showPage('pms-about')" data-ja>概要</a>
+    <a class="hm" onclick="navTo('contact')" data-en>Contact</a>
+    <a class="hm" onclick="navTo('contact')" data-ja>連絡先</a>
+    <button class="lang-btn" onclick="toggleLang()" aria-label="Change Language">🌐</button>
+    <script>
+    let isJapanese = false;
+    function toggleLang() {
+    isJapanese = !isJapanese;
+    if (isJapanese) {
+    setLang('ja');
+    } else {
+    setLang('en');
+  }
+}
+</script>
+</header>
+
+<!-- ════ HERO ════ -->
+<section id="home" class="hero">
+  <div class="hero-bg-img" aria-hidden="true"></div>
+  <div class="hero-content">
+    <span class="hero-dharma"><img src="pmsimg/logo.png" alt="Logo" loading="lazy" width="150" height="100" onerror="this.outerHTML='<span style=\'font-size:4rem\'>☸️</span>'"></span>
+    <p class="hero-tagline" data-en>Wisdom · Compassion · Community</p>
+    <p class="hero-tagline" data-ja>智慧・慈悲・共同体</p>
+    <h1 data-en>Pannya Metta Sangha</h1>
+    <h1 data-ja>パンニャ・メッタ・サンガ</h1>
+    <p class="hero-desc" data-en>Walking the path of the Dhamma — nurturing wisdom, cultivating loving-kindness, and serving humanity through the timeless teachings of the Buddha.</p>
+    <p class="hero-desc" data-ja>ダンマの道を歩む — 智慧を育み、慈悲を培い、仏陀の永遠の教えを通して人類に奉仕します。</p>
+  </div>
+</section>
+
+<!-- ════ INTRO ════ -->
+<section id="intro" style="background:#fff;">
+  <div class="container">
+    <div class="section-label" data-en>Our Inspiration</div>
+    <div class="section-label" data-ja>私たちのインスピレーション</div>
+    <div class="intro-grid">
+      <div class="intro-photo-side">
+        <div class="photo-circle">
+          <img src="pmsimg/buddha.jpeg" alt="Gautama Buddha" loading="lazy" width="200" height="200" onerror="this.style.display='none';this.parentNode.innerHTML='<div style=\'width:200px;height:200px;border-radius:50%;background:linear-gradient(135deg,#f59e0b,#fcd34d);display:flex;align-items:center;justify-content:center;font-size:5rem\'>🕉️</div>'">
+        </div>
+        <div class="photo-name" data-en>Gautama Buddha<br><small style="font-weight:400;color:#6b7280;">563 BCE – 483 BCE</small></div>
+        <div class="photo-name" data-ja>ガウタマ・ブッダ<br><small style="font-weight:400;color:#6b7280;">紀元前563年 – 483年</small></div>
+      </div>
+      <div class="intro-text">
+        <h2 data-en>The Awakened One</h2>
+        <h2 data-ja>目覚めた者</h2>
+        <p data-en>Siddhartha Gautama attained enlightenment under the Bodhi tree at Bodh Gaya, becoming the Buddha — the Awakened One. His teachings of the Four Noble Truths and the Noble Eightfold Path offer a profound roadmap from suffering to liberation.</p>
+        <p data-en>Buddhism spread throughout Asia and now encompasses many traditions worldwide, united by core values of compassion, mindfulness, and the pursuit of wisdom.</p>
+        <p data-ja>シッダールタ・ゴータマはブッダガヤの菩提樹の下で悟りを開きました。四聖諦と八正道は苦しみから解脱への道標を提供します。仏教はアジア全体に広まり、何十億もの人々に平和と内なる自由への霊感を与え続けています。</p>
+        <div class="badge-row">
+          <span class="badge" data-en>Dhamma</span><span class="badge" data-en>Enlightenment</span><span class="badge" data-en>Compassion</span><span class="badge" data-en>Nirvana</span>
+          <span class="badge" data-ja>ダルマ</span><span class="badge" data-ja>悟り</span><span class="badge" data-ja>慈悲</span><span class="badge" data-ja>涅槃</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ════ KEY INITIATIVES ════ -->
+<section class="initiatives-section" id="initiatives">
+  <div class="container">
+    <div class="section-label" data-en>Our Work</div>
+    <div class="section-label" data-ja>私たちの活動</div>
+    <div class="section-title" data-en>Key Initiatives</div>
+    <div class="section-title" data-ja>主要なイニシアチブ</div>
+    <div class="cards-grid-6">
+      <div class="card" onclick="openModal('bhoomi')">
+        <div class="card-img"><img src="pmsimg/maha2.jpeg" alt="Mahasamadhibhumi" loading="lazy"></div>
+        <div class="card-body">
+          <div class="card-title" data-en>Mahasamadhibhumi</div>
+          <div class="card-title" data-ja>マハーサマーディブーミ</div>
+          <div class="card-desc" data-en>Mahasamadhibhumi, established by Pannya Metta Sangha at Pauni in Maharashtra, stands as a sacred center of Buddhadhamma dedicated to spiritual practice, pilgrimage, education, and world peace.</div>
+          <div class="card-desc" data-ja>マハーサマーディブーミは、マハーラーシュトラ州パウニにおいてパンニャー・メッタ・サンガによって建立された、仏法の実践、巡礼、教育、そして世界平和の実現に捧げられた聖なる中心地です。</div>
+          <div class="card-cta" data-en>Learn More →</div><div class="card-cta" data-ja>詳細を見る →</div>
+        </div>
+      </div>
+      <div class="card" onclick="openModal('Prajñagiri')">
+        <div class="card-img"><img src="pmsimg/prad.jpeg" alt="Prajñagiri" loading="lazy"></div>
+        <div class="card-body">
+          <div class="card-title" data-en>Prajñagiri</div>
+          <div class="card-title" data-ja>プラドニャギリ</div>
+          <div class="card-desc" data-en>Prajñagiri is a Buddhist center founded by Pannya Metta Sangha in Dongargarh, dedicated to wisdom, spiritual training, and prayers for world peace and the welfare of all beings.</div>
+          <div class="card-desc" data-ja>プラジュニャギリは、パンニャー・メッタ・サンガによってドンガルガルに創設された仏教の聖地であり、智慧の涵養、精神修養、世界平和の実現、そしてすべての生命の幸福と福祉を祈念するための場所です。</div>
+          <div class="card-cta" data-en>Learn More →</div><div class="card-cta" data-ja>詳細を見る →</div>
+        </div>
+      </div>
+      <div class="card" onclick="openModal('headquarters')">
+        <div class="card-img"><img src="pmsimg/hq1.1.jpeg" alt="Prajñagiri" loading="lazy"></div>
+        <div class="card-body">
+          <div class="card-title" data-en>Headquarters</div>
+          <div class="card-title" data-ja>本部</div>
+          <div class="card-desc" data-en>Buddha Nag Vihara, Hardasnagar, Nagpur — the administrative and spiritual heart of Pannya Metta Sangha since 1982.</div>
+          <div class="card-desc" data-ja>1982年設立。ナーグプル・ハルダースナガルのブッダ・ナグ・ヴィハーラ。</div>
+          <div class="card-cta" data-en>Learn More →</div><div class="card-cta" data-ja>詳細を見る →</div>
+        </div>
+      </div>
+      <div class="card" onclick="openModal('school')">
+        <div class="card-img"><img src="pmsimg/school1.9.jpeg" alt="Pannya Metta Balsadan" loading="lazy"></div>
+        <div class="card-body">
+          <div class="card-title" data-en>Pannya Metta Sangha School</div>
+          <div class="card-title" data-ja>パンニャ・メッタ・サンガ学校</div>
+          <div class="card-desc" data-en>Lighting One Corner Nursery and Kindergarten was established to provide quality early childhood education and holistic development opportunities for children from underprivileged backgrounds.</div>
+          <div class="card-desc" data-ja>「一隅を照らす」保育園・幼稚園は、恵まれない家庭の子どもたちに質の高い幼児教育と全人的な成長の機会を提供するために設立されました</div>
+          <div class="card-cta" data-en>Learn More →</div><div class="card-cta" data-ja>詳細を見る →</div>
+        </div>
+      </div>
+      <div class="card" onclick="openModal('balsadan')">
+        <div class="card-img"><img src="pmsimg/bal1.1.jpeg" alt="Pannya Metta Balsadan" loading="lazy"></div>
+        <div class="card-body">
+          <div class="card-title" data-en>Pannya Metta Balsadan</div>
+          <div class="card-title" data-ja>パンニャ・メッタ・バルサダン</div>
+          <div class="card-desc" data-en> Pannya Metta Bal Sadan is a residential home dedicated to providing care, education, and opportunities for children from disadvantaged backgrounds to build a brighter future.</div>
+          <div class="card-desc" data-ja>パンニャー・メッタ・バルサダンは、社会的・経済的に困難な状況にある子どもたちに住居、教育、成長の機会を提供し、自立した人生を歩めるよう支援する児童養護施設です。</div>
+          <div class="card-cta" data-en>Learn More →</div><div class="card-cta" data-ja>詳細を見る →</div>
+        </div>
+      </div>
+      <div class="card" onclick="openModal('library')">
+        <div class="card-img"><img src="pmsimg/lib1.1.jpeg" alt="Mahasamadhibhumi" loading="lazy"></div>
+        <div class="card-body">
+          <div class="card-title" data-en>Pannya Metta Sangha Library</div>
+          <div class="card-title" data-ja>パンニャ・メッタ・サンガ図書館</div>
+          <div class="card-desc" data-en>Pannya Metta Library serves as a center for learning and research, supporting students with study facilities, educational resources, and opportunities to achieve their academic and professional goals.</div>
+          <div class="card-desc" data-ja>パンニャ・メッタ図書館は、学生に学習環境や教育資料を提供し、学問の向上と競争試験・公務員試験への挑戦を支援する学習・研究の拠点です。</div>
+          <div class="card-cta" data-en>Learn More →</div><div class="card-cta" data-ja>詳細を見る →</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ════ PROJECTS CARDS ════ -->
+<section class="projects-cards-section" id="projects-cards">
+  <div class="container">
+    <div class="section-label" data-en>Community Service</div>
+    <div class="section-label" data-ja>地域奉仕</div>
+    <div class="section-title" data-en>Ongoing Projects</div>
+    <div class="section-title" data-ja>進行中のプロジェクト</div>
+    <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:20px;" id="projectsCardsGrid">
+
+      <div class="project-card" onclick="openProjectModal('essay')">
+        <div class="project-card-img" style="background:linear-gradient(135deg,#4c1d95,#7c3aed);">
+          <img src="pmsimg/essay1.1.jpeg" alt="Essay Competition" onerror="this.style.display='none'">
+          <div class="project-card-icon"></div>
+        </div>
+        <div class="project-card-body">
+          <div class="project-card-title" data-en>Essay Competition</div>
+          <div class="project-card-title" data-ja>作文コンテスト</div>
+          <div class="project-card-desc" data-en>Encouraging young minds to explore religion, society, and culture through creative writing and intellectual engagement.</div>
+          <div class="project-card-desc" data-ja>宗教・社会・文化をテーマに、若者の創造力と学びを育む作文コンテストです。</div>
+          <div class="project-card-cta">Details →</div>
+        </div>
+      </div>
+
+      <div class="project-card" onclick="openProjectModal('cataract')">
+        <div class="project-card-img" style="background:linear-gradient(135deg,#065f46,#059669);">
+          <img src="pmsimg/cataract.jpeg" alt="Cataract Project" onerror="this.style.display='none'">
+          <div class="project-card-icon"></div>
+        </div>
+        <div class="project-card-body">
+          <div class="project-card-title" data-en>Cataract Project</div>
+          <div class="project-card-title" data-ja>白内障プロジェクト</div>
+          <div class="project-card-desc" data-en>Providing free cataract surgeries to restore vision for underprivileged communities.</div>
+          <div class="project-card-desc" data-ja>白内障手術プロジェクトは、恵まれない地域の人々に無料で白内障手術を提供し、視力の回復と生活の向上を支援しています。</div>
+          <div class="project-card-cta">Details →</div>
+        </div>
+      </div>
+
+      <div class="project-card" onclick="openProjectModal('covid')">
+        <div class="project-card-img" style="background:linear-gradient(135deg,#7f1d1d,#dc2626);">
+          <img src="pmsimg/cvd1.1.jpeg" alt="Covid Aid" onerror="this.style.display='none'">
+          <div class="project-card-icon"></div>
+        </div>
+        <div class="project-card-body">
+          <div class="project-card-title" data-en>Covid Aid</div>
+          <div class="project-card-title" data-ja>COVID支援</div>
+          <div class="project-card-desc" data-en>Emergency relief — rations, masks, sanitisers, and medicines for affected communities.</div>
+          <div class="project-card-desc" data-ja>影響を受けたコミュニティへの緊急救援。</div>
+          <div class="project-card-cta">Details →</div>
+        </div>
+      </div>
+
+      <div class="project-card" onclick="openProjectModal('handpump')">
+        <div class="project-card-img" style="background:linear-gradient(135deg,#1e3a8a,#3b82f6);">
+          <img src="pmsimg/hp1.1.jpeg" alt="Hand Pump" onerror="this.style.display='none'">
+          <div class="project-card-icon"></div>
+        </div>
+        <div class="project-card-body">
+          <div class="project-card-title" data-en>Hand Pump Facilities</div>
+          <div class="project-card-title" data-ja>手押しポンプ施設</div>
+          <div class="project-card-desc" data-en>Clean drinking water access for remote villages through hand pump installations.</div>
+          <div class="project-card-desc" data-ja>手押しポンプ設置で遠隔地の村に清潔な飲料水を提供。</div>
+          <div class="project-card-cta">Details →</div>
+        </div>
+      </div>
+
+      <div class="project-card" onclick="openProjectModal('purnima')">
+        <div class="project-card-img" style="background:linear-gradient(135deg,#92400e,#d97706);">
+          <img src="pmsimg/sutra1.1.jpeg" alt="Purnima Sutra" onerror="this.style.display='none'">
+          <div class="project-card-icon"></div>
+        </div>
+        <div class="project-card-body">
+          <div class="project-card-title" data-en>Every Purnima Sutra Pathan And Kheer Dan</div>
+          <div class="project-card-title" data-ja>毎月満月の経典読誦</div>
+          <div class="project-card-desc" data-en>Monthly full moon sutra recitation gathering, uniting the community in Dhamma practice.</div>
+          <div class="project-card-desc" data-ja>すべてのプルニマ・スートラ・パタンとキーア・ダン</div>
+          <div class="project-card-cta">Details →</div>
+        </div>
+      </div>
+
+      <div class="project-card" onclick="openProjectModal('vaishak')">
+        <div class="project-card-img" style="background:linear-gradient(135deg,#134e4a,#0d9488);">
+          <img src="pmsimg/shbr1.6.jpeg" alt="Vaishak Purnima" onerror="this.style.display='none'">
+          <div class="project-card-icon"></div>
+        </div>
+        <div class="project-card-body">
+          <div class="project-card-title" data-en>Vaishak Purnima Shibir</div>
+          <div class="project-card-title" data-ja>ヴァイシャーク満月禅修会</div>
+          <div class="project-card-desc" data-en>Annual Buddha Purnima meditation retreat — a spiritual gathering on the holiest day of the Buddhist calendar.</div>
+          <div class="project-card-desc" data-ja>年次仏陀誕生日瞑想リトリート。</div>
+          <div class="project-card-cta">Details →</div>
+        </div>
+      </div>
+
+      <div class="project-card" onclick="openProjectModal('dharmatalks')">
+        <div class="project-card-img" style="background:linear-gradient(135deg,#1e1b4b,#4338ca);">
+          <img src="pmsimg/odt1.1.jpeg" alt="Online Dharma Talks" onerror="this.style.display='none'">
+          <div class="project-card-icon"></div>
+        </div>
+        <div class="project-card-body">
+          <div class="project-card-title" data-en>Online Dharma Talks</div>
+          <div class="project-card-title" data-ja>オンライン法話</div>
+          <div class="project-card-desc" data-en>Providing weekly online Dharma teachings that bring practical Buddhist wisdom into daily life.</div>
+          <div class="project-card-desc" data-ja>日常生活に生かせる仏法の教えをオンラインで毎週提供しています</div>
+          <div class="project-card-cta">Details →</div>
+        </div>
+      </div>
+
+      <div class="project-card" onclick="openProjectModal('mobilehospital')">
+        <div class="project-card-img" style="background:linear-gradient(135deg,#7f1d1d,#b91c1c);">
+          <img src="pmsimg/mh1.1.jpeg" alt="Mobile Hospitals" onerror="this.style.display='none'">
+          <div class="project-card-icon"></div>
+        </div>
+        <div class="project-card-body">
+          <div class="project-card-title" data-en>Mobile Hospitals</div>
+          <div class="project-card-title" data-ja>移動病院</div>
+          <div class="project-card-desc" data-en>Providing free healthcare services to underserved tribal communities in remote villages.</div>
+          <div class="project-card-desc" data-ja>遠隔地の先住民族コミュニティに無料の医療サービスを提供しています。</div>
+          <div class="project-card-cta">Details →</div>
+        </div>
+      </div>
+
+      <div class="project-card" onclick="openProjectModal('treeplant')">
+        <div class="project-card-img" style="background:linear-gradient(135deg,#14532d,#16a34a);">
+          <img src="pmsimg/tp1.1.jpeg" alt="Tree Plantation" onerror="this.style.display='none'">
+          <div class="project-card-icon"></div>
+        </div>
+        <div class="project-card-body">
+          <div class="project-card-title" data-en>Tree Plantation</div>
+          <div class="project-card-title" data-ja>植樹活動</div>
+          <div class="project-card-desc" data-en>Mass tree planting drives in and around Pauni and Nagpur, nurturing a greener environment.</div>
+          <div class="project-card-desc" data-ja>パウニとナーグプル周辺での大規模植樹活動。</div>
+          <div class="project-card-cta">Details →</div>
+        </div>
+      </div>
+
+      <div class="project-card" onclick="openProjectModal('umbrella')">
+        <div class="project-card-img" style="background:linear-gradient(135deg,#1e3a5f,#2563eb);">
+          <img src="pmsimg/ud1.1.jpeg" alt="Umbrella Donations" onerror="this.style.display='none'">
+          <div class="project-card-icon"></div>
+        </div>
+        <div class="project-card-body">
+          <div class="project-card-title" data-en>Umbrella Donations</div>
+          <div class="project-card-title" data-ja>傘の寄贈</div>
+          <div class="project-card-desc" data-en>Distribution of umbrellas to students and underprivileged families ahead of the monsoon season.</div>
+          <div class="project-card-desc" data-ja>モンスーン前に学生と恵まれない家族への傘の配布。</div>
+          <div class="project-card-cta">Details →</div>
+        </div>
+      </div>
+
+      <div class="project-card" onclick="openProjectModal('emergency')">
+        <div class="project-card-img" style="background:linear-gradient(135deg,#78350f,#d97706);">
+          <img src="pmsimg/relief1.1.jpeg" alt="Emergency Relief" onerror="this.style.display='none'">
+          <div class="project-card-icon"></div>
+        </div>
+        <div class="project-card-body">
+          <div class="project-card-title" data-en>Emergency Relief Activities</div>
+          <div class="project-card-title" data-ja>緊急支援活動</div>
+          <div class="project-card-desc" data-en>Providing emergency relief and recovery support to disaster-affected communities.</div>
+          <div class="project-card-desc" data-ja>被災地域への緊急支援と復興支援を行っています。</div>
+          <div class="project-card-cta">Details →</div>
+        </div>
+      </div>
+
+      <div class="project-card" onclick="openProjectModal('oneday')">
+        <div class="project-card-img" style="background:linear-gradient(135deg,#7f1d1d,#ef4444);">
+          <img src="pmsimg/mh1.3.jpeg" alt="one day medical camp" onerror="this.style.display='none'">
+          <div class="project-card-icon"></div>
+        </div>
+        <div class="project-card-body">
+          <div class="project-card-title" data-en>One Day Medical Camp</div>
+          <div class="project-card-title" data-ja>一日診療</div>
+          <div class="project-card-desc" data-en>One-Day Medical Camps provide free healthcare services to rural communities through the support of volunteer medical professionals from various specialties.</div>
+          <div class="project-card-desc" data-ja>一日診療所は、農村地域の住民に無料の医療サービスを提供する地域医療支援活動です。</div>
+          <div class="project-card-cta">Details →</div>
+        </div>
+      </div>
+
+      <div class="project-card" onclick="openProjectModal('clothes')">
+        <div class="project-card-img" style="background:linear-gradient(135deg,#312e81,#6366f1);">
+          <img src="pmsimg/cd0.1.jpeg" alt="Clothes Distribution" onerror="this.style.display='none'">
+          <div class="project-card-icon"></div>
+        </div>
+        <div class="project-card-body">
+          <div class="project-card-title" data-en>Clothes Distribution</div>
+          <div class="project-card-title" data-ja>衣類配布</div>
+          <div class="project-card-desc" data-en>Annual distribution of clothes and bedding to the needy, Balsadan children, and tribal communities.</div>
+          <div class="project-card-desc" data-ja>貧困者、バルサダンの子どもたち、部族コミュニティへの年次衣類・寝具配布。</div>
+          <div class="project-card-cta">Details →</div>
+        </div>
+      </div>
+
+      <div class="project-card" onclick="openProjectModal('blood')">
+        <div class="project-card-img" style="background:linear-gradient(135deg,#991b1b,#ef4444);">
+          <img src="pmsimg/bd1.1.jpeg" alt="Blood Donation" onerror="this.style.display='none'">
+          <div class="project-card-icon"></div>
+        </div>
+        <div class="project-card-body">
+          <div class="project-card-title" data-en>Blood Donation Camps</div>
+          <div class="project-card-title" data-ja>献血キャンプ</div>
+          <div class="project-card-desc" data-en>Regular blood donation drives organised by Pannya Metta Sangha volunteers across the region.</div>
+          <div class="project-card-desc" data-ja>パンニャ・メッタ・サンガボランティアによる地域での定期的な献血ドライブ。</div>
+          <div class="project-card-cta">Details →</div>
+        </div>
+      </div>
+
+      <div class="project-card" onclick="openProjectModal('yatra')">
+        <div class="project-card-img" style="background:linear-gradient(135deg,#0c4a6e,#0369a1);">
+          <img src="pmsimg/vsy1.1.jpeg" alt="Dhamma Yatra" onerror="this.style.display='none'">
+          <div class="project-card-icon"></div>
+        </div>
+        <div class="project-card-body">
+          <div class="project-card-title" data-en>Vishwa Shanti Dhamma Yatra</div>
+          <div class="project-card-title" data-ja>世界平和ダンマ巡礼</div>
+          <div class="project-card-desc" data-en>A sacred journey for world peace — a pilgrimage uniting Buddhist communities across India.</div>
+          <div class="project-card-desc" data-ja>世界平和のための神聖な巡礼 — インド全土の仏教コミュニティを結ぶ。</div>
+          <div class="project-card-cta">Details →</div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ════ DONATION SECTION (moved after Ongoing Projects) ════ -->
+<section class="donation-section" id="donation">
+  <div class="donation-inner">
+    <div class="section-label" data-en>Support Our Mission</div>
+    <div class="section-label" data-ja>私たちの使命を支援</div>
+    <div class="section-title" data-en>Make a Donation</div>
+    <div class="section-title" data-ja>ご寄付のお願い</div>
+    <div class="divider"></div>
+    <p class="donation-desc" data-en>Your generosity fuels our mission — from the children at Balsadan to free eye surgeries for villages, every contribution transforms lives. Join thousands of donors walking the path of compassion with us.</p>
+    <p class="donation-desc" data-ja>あなたの寛大さが私たちの使命を支えます — バルサダンの子どもたちから村への無料眼科手術まで、すべての支援が命を変えます。慈悲の道を共に歩む何千もの支援者に加わってください。</p>
+    <div class="donation-grid">
+      <div class="donation-qr-box">
+        <div class="qr-label" data-en>Scan to Donate</div>
+        <div class="qr-label" data-ja>スキャンして寄付</div>
+        <div class="qr-placeholder"><img src="pmsimg/donation_qr.jpeg" alt="Donation QR Code"></div>
+            
+        <div class="qr-sub" data-en>UPI / Bank Transfer · Pannya Metta Sangha</div>
+        <div class="qr-sub" data-ja>UPI / 銀行振込 · パンニャ・メッタ・サンガ</div>
+        <div style="margin-top:16px;">
+          <a href="mailto:pannyamettasangha1982@gmail.com?subject=Donation Enquiry" class="donate-btn">
+             <span data-en>Donate Now</span><span data-ja>今すぐ寄付</span>
+          </a>
+        </div>
+      </div>
+      <div class="donation-info-box">
+        <h3 data-en>Your Donation Supports</h3>
+        <h3 data-ja>ご寄付が支援するもの</h3>
+        <div class="donation-causes">
+          <div class="cause-item"><div class="cause-icon">🏠</div><div class="cause-label" data-en>Balsadan Children's Home</div><div class="cause-label" data-ja>バルサダンの家</div></div>
+          <div class="cause-item"><div class="cause-icon">👁️</div><div class="cause-label" data-en>Free Eye Surgeries</div><div class="cause-label" data-ja>無料眼科手術</div></div>
+          <div class="cause-item"><div class="cause-icon">🌳</div><div class="cause-label" data-en>Tree Plantation</div><div class="cause-label" data-ja>植樹活動</div></div>
+          <div class="cause-item"><div class="cause-icon">🎓</div><div class="cause-label" data-en>Student Scholarships</div><div class="cause-label" data-ja>奨学金</div></div>
+          <div class="cause-item"><div class="cause-icon">🚑</div><div class="cause-label" data-en>Mobile Hospital</div><div class="cause-label" data-ja>移動病院</div></div>
+          <div class="cause-item"><div class="cause-icon">🕌</div><div class="cause-label" data-en>Mahavihar Construction</div><div class="cause-label" data-ja>マハービハーラ建設</div></div>
+        </div>
+        <div class="donation-detail" style="margin-top:20px;">
+          <div class="donation-detail-icon">🏦</div>
+          <div>
+            <div class="donation-detail-label" data-en>Bank Details</div>
+            <div class="donation-detail-label" data-ja>銀行詳細</div>
+            <div class="donation-detail-text" data-en>Pannya Metta Sangha<br>UPI ID:<span onclick="navigator.clipboard.writeText('boim-874631032226@boi')"style="cursor:pointer;font-weight:700;color:#fcd34d;">boim-874631032226@boi</span>
+</div>
+
+<div class="donation-detail-text" data-ja>
+  パンニャ・メッタ・サンガ<br>
+  UPI ID:
+  <span onclick="navigator.clipboard.writeText('boim-874631032226@boi')"
+        style="cursor:pointer;font-weight:700;color:#fcd34d;">
+    boim-874631032226@boi
+  </span>
+</div>
+        </div>
+        <div class="donation-detail">
+          <div class="donation-detail-icon">📧</div>
+          <div>
+            <div class="donation-detail-label" data-en>Contact for Donations</div>
+            <div class="donation-detail-label" data-ja>寄付に関するお問い合わせ</div>
+            <div class="donation-detail-text">pannyamettasangha1982@gmail.com<br>+91 9766186214</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ════ MAGAZINE SECTION (moved below Donation) ════ -->
+<section class="magazine-section" id="magazine">
+  <div class="container">
+    <div class="section-label" data-en>Publications</div>
+    <div class="section-label" data-ja>出版物</div>
+    <div class="section-title" data-en>Mahasamadhibhumi Magazine</div>
+    <div class="section-title" data-ja>マハーサマーディブーミ雑誌</div>
+    <div class="divider"></div>
+    <div class="magazine-grid">
+      <div class="mag-col">
+        <div class="mag-col-header">
+          <div class="mag-col-icon mag-icon-blue">📰</div>
+          <div>
+            <div class="mag-col-title" data-en>Mahasamadhibhumi Magazine</div>
+            <div class="mag-col-title" data-ja>マハーサマーディブーミ雑誌</div>
+            <div class="mag-col-sub" data-en>Annual publication — Buddhist scholarship & community news</div>
+            <div class="mag-col-sub" data-ja>年次出版物 — 仏教研究とコミュニティニュース</div>
+          </div>
+        </div>
+        <p style="color:var(--text-mid);font-size:.88rem;line-height:1.7;margin-bottom:20px;" data-en>Our annual flagship magazine captures the spirit of the Dhammasangoshti, features scholarly articles on Buddhism and Dr. Ambedkar's legacy, community stories, and highlights from the year's activities.</p>
+        <p style="color:var(--text-mid);font-size:.88rem;line-height:1.7;margin-bottom:20px;" data-ja>年次旗艦雑誌はダンマサンガシュティの精神、仏教とアンベードカル博士の遺産に関する学術記事、コミュニティストーリー、年間活動のハイライトを記録しています。</p>
+        <div class="mag-item">
+          <div class="mag-item-year">2025</div>
+          <div class="mag-item-info">
+            <div class="mag-item-name" data-en>Dhammasangoshti Edition 2025</div>
+            <div class="mag-item-name" data-ja>ダンマサンガシュティ版 2025</div>
+            <div class="mag-item-detail" data-en>Annual Dhammasangoshti special issue</div>
+            <div class="mag-item-detail" data-ja>年次ダンマサンガシュティ特別号</div>
+          </div>
+          <span class="mag-item-badge mag-badge-available" data-en>Available</span>
+          <span class="mag-item-badge mag-badge-available" data-ja>入手可能</span>
+        </div>
+        <a href="documents/magazine.pdf" target="_blank" class="pdf-link">📄 Tap To Read The 2025 Magazine</a>
+        <div class="mag-item" style="margin-top:12px;background:#f8fafc;">
+          <div class="mag-item-year" style="color:#94a3b8;">2026</div>
+          <div class="mag-item-info">
+            <div class="mag-item-name" data-en>Dhammasangoshti Edition 2026</div>
+            <div class="mag-item-name" data-ja>ダンマサンガシュティ版 2026</div>
+            <div class="mag-item-detail" data-en>Coming soon — Upcoming anniversary edition</div>
+            <div class="mag-item-detail" data-ja>近日公開 — 記念特別版</div>
+          </div>
+          <span class="mag-item-badge mag-badge-upcoming" data-en>Upcoming</span>
+          <span class="mag-item-badge mag-badge-upcoming" data-ja>近日公開</span>
+        </div>
+        <div style="margin-top:16px;padding:16px;background:var(--blue-pale);border-radius:10px;">
+          <p style="font-size:.82rem;color:var(--blue-mid);margin:0;" data-en>✍️ To contribute articles, essays or photos to the magazine, contact us at pannyamettasangha1982@gmail.com</p>
+          <p style="font-size:.82rem;color:var(--blue-mid);margin:0;" data-ja>✍️ 雑誌への記事、作文、写真の寄稿は pannyamettasangha1982@gmail.com までご連絡ください</p>
+        </div>
+      </div>
+      <div class="mag-col">
+        <div class="mag-col-header">
+          <div class="mag-col-icon mag-icon-red">🌸</div>
+          <div>
+            <div class="mag-col-title" data-en>Japanese Pannya Metta Sangha</div>
+            <div class="mag-col-title" data-ja>日本パンニャ・メッタ・サンガ</div>
+            <div class="mag-col-sub" data-en>Indo-Japanese Buddhist publication in collaboration with Saichoji Temple</div>
+            <div class="mag-col-sub" data-ja>西光寺との協力によるインド・日本仏教出版物</div>
+          </div>
+        </div>
+        <p style="color:var(--text-mid);font-size:.88rem;line-height:1.7;margin-bottom:20px;" data-en>Published in collaboration with our dear friends at Saichoji Temple in Japan, this Japanese-language edition bridges the Indo-Japanese Buddhist connection — sharing the spirit of the Dhammasangoshti with Japanese readers and the global Buddhist community.</p>
+        <p style="color:var(--text-mid);font-size:.88rem;line-height:1.7;margin-bottom:20px;" data-ja>日本の西光寺の親愛なる友人との協力のもと発行されるこの日本語版は、インド・日本間の仏教的つながりを結びます。</p>
+        <div style="background:linear-gradient(135deg,#fff7ed,#fef3c7);border:1px solid #fcd34d;border-radius:12px;padding:20px;margin-bottom:16px;">
+          <div style="font-family:'Cinzel',serif;color:#92400e;font-size:.95rem;font-weight:700;margin-bottom:8px;" data-en>🇯🇵 Japanese Edition Features</div>
+          <div style="font-family:'Cinzel',serif;color:#92400e;font-size:.95rem;font-weight:700;margin-bottom:8px;" data-ja>🇯🇵 日本語版の特集</div>
+          <ul style="color:#78350f;font-size:.84rem;padding-left:18px;line-height:2;">
+            <li data-en>Buddhist articles in Japanese</li>
+            <li data-en>Horisawaji's reflections from Japan</li>
+            <li data-en>Indo-Japanese cultural exchange reports</li>
+            <li data-en>Messages from Saichoji Temple</li>
+            <li data-ja>日本語の仏教記事</li>
+            <li data-ja>堀沢師からの日本からの省察</li>
+            <li data-ja>インド・日本文化交流報告</li>
+            <li data-ja>西光寺からのメッセージ</li>
+          </ul>
+        </div>
+        <a href="" class="pdf-link pdf-link-gold">🌸 <span data-en>Releasing Soon Japanese Magazine</span><span data-ja>日本語雑誌をダウンロード</span></a>
+        <div style="margin-top:16px;padding:16px;background:#fef3c7;border-radius:10px;">
+          <p style="font-size:.82rem;color:#92400e;margin:0;" data-en>🤝 This magazine symbolises the enduring bond between Pannya Metta Sangha and Saichoji Temple — a bridge of Dhamma across continents.</p>
+          <p style="font-size:.82rem;color:#92400e;margin:0;" data-ja>🤝 この雑誌はパンニャ・メッタ・サンガと西光寺の永続的な絆の象徴です。</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ════ UPCOMING PROJECTS (moved after Magazine) ════ -->
+<section class="upcoming-section" id="upcoming-projects">
+  <div class="container">
+    <div class="section-label" data-en>Future Vision</div>
+    <div class="section-label" data-ja>未来のビジョン</div>
+    <div class="section-title" data-en>Upcoming Projects</div>
+    <div class="section-title" data-ja>今後のプロジェクト</div>
+    <div class="divider"></div>
+    <div class="upcoming-grid">
+      <div class="upcoming-card">
+<div class="upcoming-card-img"><img src="pmsimg/sadak.jpeg" alt="${item.title}"></div>     
+   <div class="upcoming-card-body">
+          <div class="upcoming-card-badge" data-en>Infrastructure</div>
+          <div class="upcoming-card-badge" data-ja>インフラ</div>
+          <div class="upcoming-card-title" data-en>Sadak Niwas</div>
+          <div class="upcoming-card-title" data-ja>サダック・ニワス</div>
+          <div class="upcoming-card-desc" data-en>New residential facility construction and beautification to serve pilgrims and community members visiting Mahasamadhibhumi.</div>
+          <div class="upcoming-card-desc" data-ja>マハーサマーディブーミを訪れる巡礼者のための新しい宿泊施設の建設。</div>
+          <div class="upcoming-card-subtopics">
+            <span class="subtopic-tag" data-en>🏗️ Construction</span>
+            <span class="subtopic-tag" data-en>🎨 Painting</span>
+            <span class="subtopic-tag" data-ja>🏗️ 建設</span>
+            <span class="subtopic-tag" data-ja>🎨 塗装</span>
+          </div>
+        </div>
+      </div>
+      <div class="upcoming-card">
+<div class="upcoming-card-img"><img src="pmsimg/oldbuild.jpeg" alt="${item.title}"></div>
+        <div class="upcoming-card-body">
+          <div class="upcoming-card-badge" data-en>Renovation</div>
+          <div class="upcoming-card-badge" data-ja>改修</div>
+          <div class="upcoming-card-title" data-en>Old Building Renovation</div>
+          <div class="upcoming-card-title" data-ja>旧建物の改修</div>
+          <div class="upcoming-card-desc" data-en>Complete restoration and renovation of the historical old building at the headquarters complex.</div>
+          <div class="upcoming-card-desc" data-ja>本部複合施設の歴史ある旧建物の完全修復と改修。</div>
+          <div class="upcoming-card-subtopics">
+            <span class="subtopic-tag" data-en>🔨 Renovation</span>
+            <span class="subtopic-tag" data-en>🎨 Painting</span>
+            <span class="subtopic-tag" data-ja>🔨 改修</span>
+            <span class="subtopic-tag" data-ja>🎨 塗装</span>
+          </div>
+        </div>
+      </div>
+      <div class="upcoming-card">
+        <div class="upcoming-card-img"><img src="pmsimg/mvc.jpeg" alt="${item.title}"></div>
+        <div class="upcoming-card-body">
+          <div class="upcoming-card-badge" data-en>Sacred Site</div>
+          <div class="upcoming-card-badge" data-ja>聖地</div>
+          <div class="upcoming-card-title" data-en>Mahasamadhi Mahavihar</div>
+          <div class="upcoming-card-title" data-ja>マハーサマーディ・マハービハーラ</div>
+          <div class="upcoming-card-desc" data-en>Comprehensive development of the Mahavihar — painting, murti construction and assembly, and safety grills installation.</div>
+          <div class="upcoming-card-desc" data-ja>マハービハーラの総合的な開発。</div>
+          <div class="upcoming-card-subtopics">
+            <span class="subtopic-tag" data-en>🎨 Painting</span>
+            <span class="subtopic-tag" data-en>🗿 Murti Construction</span>
+            <span class="subtopic-tag" data-en>🛡️ Safety Grills</span>
+            <span class="subtopic-tag" data-ja>🎨 塗装</span>
+            <span class="subtopic-tag" data-ja>🗿 仏像建設</span>
+            <span class="subtopic-tag" data-ja>🛡️ 安全グリル</span>
+          </div>
+        </div>
+      </div>
+      <div class="upcoming-card">
+        <div class="upcoming-card-img"><img src="pmsimg/youth.jpeg" alt="${item.title}"></div>
+        <div class="upcoming-card-body">
+          <div class="upcoming-card-badge" data-en>New Initiative</div>
+          <div class="upcoming-card-badge" data-ja>新イニシアチブ</div>
+          <div class="upcoming-card-title" data-en>Youth Organisation</div>
+          <div class="upcoming-card-title" data-ja>青年組織</div>
+          <div class="upcoming-card-desc" data-en>Launching a dedicated youth wing for Dhamma study, leadership development, and community service.</div>
+          <div class="upcoming-card-desc" data-ja>ダンマ学習、リーダーシップ開発の専用青年部の立ち上げ。</div>
+          <div class="upcoming-card-subtopics">
+            <span class="subtopic-tag" data-en>📖 Dhamma Study</span>
+            <span class="subtopic-tag" data-en>🌱 Leadership</span>
+            <span class="subtopic-tag" data-ja>📖 ダンマ学習</span>
+            <span class="subtopic-tag" data-ja>🌱 リーダーシップ</span>
+          </div>
+        </div>
+      </div>
+      <div class="upcoming-card">
+        <div class="upcoming-card-img"><img src="pmsimg/cataract.jpeg" alt="${item.title}"></div>
+        <div class="upcoming-card-body">
+          <div class="upcoming-card-badge" data-en>Health</div>
+          <div class="upcoming-card-badge" data-ja>健康</div>
+          <div class="upcoming-card-title" data-en>Cataract Project Expansion</div>
+          <div class="upcoming-card-title" data-ja>白内障プロジェクト拡大</div>
+          <div class="upcoming-card-desc" data-en>Expanding free cataract surgery services to more villages across Bhandara and Gadchiroli districts.</div>
+          <div class="upcoming-card-desc" data-ja>バンダーラ・ガドチロリ地区のより多くの村への無料白内障手術サービスの拡大。</div>
+          <div class="upcoming-card-subtopics">
+            <span class="subtopic-tag" data-en>🏥 Surgery Camps</span>
+            <span class="subtopic-tag" data-en>🚗 Rural Outreach</span>
+            <span class="subtopic-tag" data-ja>🏥 手術キャンプ</span>
+            <span class="subtopic-tag" data-ja>🚗 農村アウトリーチ</span>
+          </div>
+        </div>
+      </div>
+      <div class="upcoming-card">
+        <div class="upcoming-card-img"><img src="pmsimg/pad.jpeg" alt="${item.title}"></div>
+        <div class="upcoming-card-body">
+          <div class="upcoming-card-badge" data-en>Women's Welfare</div>
+          <div class="upcoming-card-badge" data-ja>女性福祉</div>
+          <div class="upcoming-card-title" data-en>Monthly Pad Distribution</div>
+          <div class="upcoming-card-title" data-ja>月次衛生パッド配布</div>
+          <div class="upcoming-card-desc" data-en>Free menstrual hygiene products for underprivileged women and girls, promoting dignity and health.</div>
+          <div class="upcoming-card-desc" data-ja>恵まれない女性と少女への月次生理用品の無料配布。</div>
+          <div class="upcoming-card-subtopics">
+            <span class="subtopic-tag" data-en>🎀 Women's Health</span>
+            <span class="subtopic-tag" data-en>🏫 School Girls</span>
+            <span class="subtopic-tag" data-ja>🎀 女性の健康</span>
+            <span class="subtopic-tag" data-ja>🏫 学校の女生徒</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ════ PRESIDENT DETAIL SECTION (with 5 photos) ════ -->
+<section class="president-section" id="president-detail">
+  <div class="container">
+    <div class="section-label" style="color:#7c3aed;" data-en>A Life of Wisdom & Service</div>
+    <div class="section-label" style="color:#7c3aed;" data-ja>智慧と奉仕の人生</div>
+    <div class="section-title" style="color:#4c1d95;" data-en>Venerable Sangharatna Manake</div>
+    <div class="section-title" style="color:#4c1d95;" data-ja>サンガラトナ・マナケ師</div>
+    <div class="divider"></div>
+    <!-- 5 President Photos -->
+    <div class="president-photo-strip">
+      <div class="pps-item"><img src="pmsimg/pres1.1.jpeg" alt="Venerable Sangharatna Manake" onerror="this.outerHTML='<span>🙏</span>'"></div>
+      <div class="pps-item"><img src="pmsimg/pres1.2.jpeg" alt="Venerable Sangharatna Manake speaking" onerror="this.outerHTML='<span>☸️</span>'"></div>
+      <div class="pps-item"><img src="pmsimg/pres1.3.jpeg" alt="Venerable Sangharatna Manake" onerror="this.outerHTML='<span>🧘</span>'"></div>
+      <div class="pps-item"><img src="pmsimg/pres1.4.jpeg" alt="Venerable Sangharatna Manake at ceremony" onerror="this.outerHTML='<span>🌸</span>'"></div>
+      <div class="pps-item"><img src="pmsimg/pres1.5.jpeg" alt="Venerable Sangharatna Manake with community" onerror="this.outerHTML='<span>🕊️</span>'"></div>
+    </div>
+    <div class="president-grid">
+      <div class="president-photo-col">
+        <img src="pmsimg/name.png" alt="Venerable Sangharatna Manake" class="president-photo" onerror="this.outerHTML='<div class=\'president-photo-ph\'>🙏</div>'">
+        <div class="president-name" data-en>Ven. Sangharatna Manake</div>
+        <div class="president-name" data-ja>サンガラトナ・マナケ師</div>
+        <div class="president-role" data-en>President, Pannya Metta Sangha</div>
+        <div class="president-role" data-ja>パンニャ・メッタ・サンガ会長</div>
+        <div style="margin-top:20px;">
+          <div class="badge-row" style="justify-content:center;">
+            <span class="badge" style="background:#ede9fe;color:#7c3aed;" data-en>Ordained Monk</span>
+            <span class="badge" style="background:#ede9fe;color:#7c3aed;" data-ja>比丘</span>
+            <span class="badge" style="background:#ede9fe;color:#7c3aed;" data-en>Social Reformer</span>
+            <span class="badge" style="background:#ede9fe;color:#7c3aed;" data-ja>社会改革者</span>
+          </div>
+        </div>
+      </div>
+      <div class="president-text">
+        <h2 data-en>Life & Spiritual Journey</h2>
+        <h2 data-ja>生涯と精神的旅</h2>
+        <p data-en>Venerable Sangharatna Manake's life is a testament to the transformative power of the Dhamma. Born into a humble family in Maharashtra, his childhood was marked by a deep curiosity about life's deeper meaning and the struggles of the community around him.</p>
+        <p data-ja>サンガラトナ・マナケ師の生涯はダンマの変革力の証です。マハーラーシュトラの謙虚な家族に生まれ、幼少期から人生の深い意味とコミュニティの苦難への深い好奇心がありました。</p>
+        <div class="president-timeline">
+          <div class="timeline-item">
+            <div class="timeline-dot">🌱</div>
+            <div class="timeline-content">
+              <div class="timeline-title" data-en>Childhood & Dhamma Roots</div>
+              <div class="timeline-title" data-ja>幼少期とダンマの根</div>
+              <div class="timeline-text" data-en>Growing up in the wake of Dr. Ambedkar's historic 1956 conversion, young Sangharatna was deeply influenced by his parents' commitment to Buddhist values. His father and mother instilled in him the principles of equality, compassion, and the courage to seek truth.</div>
+              <div class="timeline-text" data-ja>1956年のアンベードカル博士の歴史的な改宗運動の中で育ち、若きサンガラトナは両親の仏教的価値観へのコミットメントに深く影響されました。</div>
+            </div>
+          </div>
+          <div class="timeline-item">
+            <div class="timeline-dot">📚</div>
+            <div class="timeline-content">
+              <div class="timeline-title" data-en>Father & Mother — Dhamma Foundation</div>
+              <div class="timeline-title" data-ja>父と母 — ダンマの基盤</div>
+              <div class="timeline-text" data-en>His parents were devout followers of Dr. Ambedkar's Navayana Buddhism. Their home was filled with the chanting of Tri-Ratna Vandana, discussions of Dr. Ambedkar's writings, and the spirit of service.</div>
+              <div class="timeline-text" data-ja>両親はアンベードカル博士のナヴァヤーナ仏教の熱心な信者でした。家庭は三宝礼拝の唱和、アンベードカル博士の著作についての議論、奉仕の精神に満ちていました。</div>
+            </div>
+          </div>
+          <div class="timeline-item">
+            <div class="timeline-dot">🎓</div>
+            <div class="timeline-content">
+              <div class="timeline-title" data-en>College Life & Intellectual Awakening</div>
+              <div class="timeline-title" data-ja>大学生活と知的覚醒</div>
+              <div class="timeline-text" data-en>During his college years, Sangharatna engaged deeply with Buddhist philosophy, Pali studies, and the works of Dr. Ambedkar. College life sharpened his intellectual understanding of the Dhamma and ignited his passion for social reform through Buddhist teachings.</div>
+              <div class="timeline-text" data-ja>大学時代、サンガラトナは仏教哲学、パーリ語研究、アンベードカル博士の著作に深く取り組みました。</div>
+            </div>
+          </div>
+          <div class="timeline-item">
+            <div class="timeline-dot">✈️</div>
+            <div class="timeline-content">
+              <div class="timeline-title" data-en>Departure to Japan</div>
+              <div class="timeline-title" data-ja>日本への旅立ち</div>
+              <div class="timeline-text" data-en>A pivotal turning point came when Sangharatna journeyed to Japan to deepen his Buddhist studies. This journey opened new horizons — connecting him with Japanese Buddhism and establishing the sacred Indo-Japanese bonds through Saichoji Temple.</div>
+              <div class="timeline-text" data-ja>サンガラトナが仏教研究を深めるために日本に旅立ったとき、決定的な転換点が訪れました。今日の西光寺との神聖なインド・日本の絆を確立しました。</div>
+            </div>
+          </div>
+          <div class="timeline-item">
+            <div class="timeline-dot">🌸</div>
+            <div class="timeline-content">
+              <div class="timeline-title" data-en>Life in Japan</div>
+              <div class="timeline-title" data-ja>日本での生活</div>
+              <div class="timeline-text" data-en>His years in Japan were transformative. Immersed in Japanese monastic traditions, he absorbed the discipline of Zen practice, the warmth of community fellowship, and the Japanese Buddhist spirit of Sho-ju — caring for all without discrimination.</div>
+              <div class="timeline-text" data-ja>日本での年月は変革的でした。日本の出家伝統に没入し、禅の修行の規律、コミュニティの友愛の温かさを吸収しました。</div>
+            </div>
+          </div>
+          <div class="timeline-item">
+            <div class="timeline-dot">🙏</div>
+            <div class="timeline-content">
+              <div class="timeline-title" data-en>Life as a Monk & PMS President</div>
+              <div class="timeline-title" data-ja>僧侶としての生活とPMS会長</div>
+              <div class="timeline-text" data-en>Returning to India, he took full ordination and dedicated his monastic life to social engagement. As President of Pannya Metta Sangha since 1982, he has overseen the Balsadan children's home, established Prajñagiri and Mahasamadhibhumi, launched medical camps, and built the annual Dhammasangoshti into a major Buddhist gathering.</div>
+              <div class="timeline-text" data-ja>インドに帰国し、具足戒を受け、社会参加に出家生活を捧げました。1982年からパンニャ・メッタ・サンガ会長として多くの社会事業を推進してきました。</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ════ ABOUT ════ -->
+<section class="about-section" id="about">
+  <div class="container">
+    <div class="about-content">
+      <div class="section-label" data-en>Who We Are</div>
+      <div class="section-label" data-ja>私たちについて</div>
+      <div class="section-title center" data-en>About Pannya Metta Sangha</div>
+      <div class="section-title center" data-ja>パンニャ・メッタ・サンガについて</div>
+      <div class="divider"></div>
+      <p data-en>Pannya Metta Sangha (PMS) is a spiritual and social organization dedicated to promoting wisdom, loving-kindness, and community service. Our name embodies our core identity: <strong>Pannya</strong> (Wisdom), <strong>Metta</strong> (Loving-Kindness), and <strong>Sangha</strong> (Community).</p>
+      <p data-en>Founded in 1982, our mission is to spread the teachings of mindfulness and ethical living while actively engaging in social welfare. We welcome all who seek to walk the path of wisdom and compassion.</p>
+      <p data-en><strong>Pannya Metta Sangha Mission Statement</strong></p>
+      <p data-en>The fundamental Buddha Dhamma principles of wisdom and compassion are the foundation and guiding values of all PMS Pannya Metta Sangha activities. Guided by these principles, PMS Pannya Metta Sangha carries out activities in education, healthcare, social welfare, livelihood support, emergency relief, and religious services.</p>
+      <p data-ja>パンニャ・メッタ・サンガ（PMS）は、智慧、慈悲、そして社会奉仕の促進に尽力する精神的かつ社会的な団体です。その名称には、私たちの核心となる理念である<strong>パンニャ</strong>（智慧）、<strong>メッタ</strong>（慈悲）、そして<strong>サンガ</strong>（共同体）が込められています。</p>
+      <p data-ja>1982年に設立された当団体の使命は、社会福祉活動に積極的に取り組みながら、仏教の教えと倫理的な生き方を広めることにあります。智慧と慈悲の道を歩もうと志すすべての方を歓迎いたします。</p>
+      <p data-ja><strong>PMSパンニャメッタサンガの活動理念</strong></p>
+      <p data-ja>仏教の根本理念である智恵と慈悲を拠り所にして教育、医療、社会福祉、生活支援、緊急支援、宗教活動をを行っている。</p>
+  <div class="values-grid">
+        <div class="value-card"><div class="value-icon">🧘</div><div class="value-title" data-en>Spirituality</div><div class="value-title" data-ja>霊性</div><div class="value-desc" data-en>Grounded in Buddhist practice and the transformative power of mindfulness.</div><div class="value-desc" data-ja>仏教の実践とマインドフルネスの変革力に基づいています。</div></div>
+        <div class="value-card"><div class="value-icon">💛</div><div class="value-title" data-en>Compassion</div><div class="value-title" data-ja>慈悲</div><div class="value-desc" data-en>Driven by Metta — boundless loving-kindness extended to all beings.</div><div class="value-desc" data-ja>すべてに向けられた無限の慈悲（メッタ）に駆られています。</div></div>
+        <div class="value-card"><div class="value-icon">🤝</div><div class="value-title" data-en>Community</div><div class="value-title" data-ja>共同体</div><div class="value-desc" data-en>Building inclusive, caring communities through social welfare and education.</div><div class="value-desc" data-ja>社会福祉と教育を通じて包括的なコミュニティを構築します。</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+
+<!-- ════ CONTACT ════ -->
+<section class="contact-section" id="contact">
+  <div class="container">
+    <div class="contact-grid">
+      <div class="contact-brand">
+        <div class="contact-logo"><img src="pmsimg/logo.png" alt="Logo" loading="lazy" width="300" height="150" onerror="this.outerHTML='<div style=\'font-size:5rem\'>☸️</div>'"></div>
+        <div class="contact-brand-name" data-en>Pannya Metta Sangha</div>
+        <div class="contact-brand-name" data-ja>パンニャ・メッタ・サンガ</div>
+        <div class="contact-motto" data-en>Wisdom • Compassion • Community</div>
+        <div class="contact-motto" data-ja>智慧・慈悲・共同体</div>
+        <div class="social-icons">
+          <div class="social-icon" title="Facebook">📘</div>
+          <div class="social-icon" title="Instagram">📸</div>
+          <div class="social-icon" title="YouTube">▶️</div>
+          <div class="social-icon" title="WhatsApp">💬</div>
+        </div>
+        <div class="map-placeholder">📍 Nagpur, Maharashtra, India</div>
+      </div>
+      <div class="contact-details">
+        <h3 data-en>Get In Touch</h3>
+        <h3 data-ja>お問い合わせ</h3>
+        <div class="contact-item">
+          <div class="contact-item-icon">📧</div>
+          <div>
+            <div class="contact-item-label" data-en>Email</div>
+            <div class="contact-item-label" data-ja>メール</div>
+            <div class="contact-item-text">pannyamettasangha1982@gmail.com</div>
+          </div>
+        </div>
+        <div class="contact-item">
+          <div class="contact-item-icon">📞</div>
+          <div>
+            <div class="contact-item-label" data-en>Phone</div>
+            <div class="contact-item-label" data-ja>電話</div>
+            <div class="contact-item-text">+91 9766186214</div>
+          </div>
+        </div>
+        <div class="contact-item">
+          <div class="contact-item-icon">📍</div>
+          <div>
+            <div class="contact-item-label" data-en>Address</div>
+            <div class="contact-item-label" data-ja>住所</div>
+            <div class="contact-item-text" data-en>Regd. No. MAH 586/82, F-3849(NAG)<br>Head Office: Buddha Nag Vihara,<br>Cr. No. 15/21, Hardasnagar (Lashkaribagh),<br>Nagpur, Maharashtra, India</div>
+            <div class="contact-item-text" data-ja>登録番号：MAH 586/82, F-3849(NAG)<br>本部：ブッダ・ナグ・ヴィハーラ<br>ハルダースナガル（ラシュカリバーグ）<br>ナーグプル、マハーラーシュトラ州、インド</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="footer-title" data-en>Pannya Metta Sangha</div>
+  <div class="footer-title" data-ja>パンニャ・メッタ・サンガ</div>
+  <p data-en>© 2026 Pannya Metta Sangha, India. All rights reserved. | Spreading Wisdom · Compassion · Community</p>
+  <p data-ja>© 2026 パンニャ・メッタ・サンガ、インド。全著作権所有。| 智慧・慈悲・共同体</p>
+</footer>
+
+</div><!-- /mainSite -->
+
+<!-- ══════════════════════════════════════════════
+     SUB-PAGES
+══════════════════════════════════════════════ -->
+<div id="page-buddhism" class="subpage">
+  <div class="sp-hero sp-buddhism">
+    <div class="date-badge b-gold" data-en>Knowledge & History</div>
+    <div class="date-badge b-gold" data-ja>知識と歴史</div>
+    <h1 data-en>Buddhism, Dr. Ambedkar & Saichoji</h1>
+    <h1 data-ja>仏教・アンベードカル博士・西光寺</h1>
+    <p class="sp-hero-sub" data-en>Exploring the roots of Buddhism, the revolutionary work of Dr. B.R. Ambedkar, and our sacred connection with Saichoji Temple in Japan.</p>
+    <p class="sp-hero-sub" data-ja>仏教の根源、アンベードカル博士の革命的な業績、そして日本の西光寺との神聖なつながりを探ります。</p>
+  </div>
+  <div class="sp-content">
+    <div class="info-card ic-gold">
+      <h2 data-en>☸ Buddhism — The Path of Awakening</h2>
+      <h2 data-ja>☸ 仏教 — 覚醒への道</h2>
+      <p data-en>Buddhism originated in ancient India around the 5th century BCE, founded by Siddhartha Gautama. After years of asceticism and meditation, he attained enlightenment under the sacred Bodhi Tree at Bodh Gaya, becoming the Buddha — the "Awakened One."</p>
+      <p data-ja>仏教は紀元前5世紀頃の古代インドに、シッダールタ・ゴータマによって創始されました。ブッダガヤの菩提樹の下で悟りを開き、「目覚めた者」すなわちブッダとなりました。</p>
+      <h3 data-en>Four Noble Truths & Noble Eightfold Path</h3>
+      <h3 data-ja>四聖諦と八正道</h3>
+      <ul>
+        <li data-en><strong>Dukkha</strong> — The truth of suffering</li>
+        <li data-en><strong>Samudaya</strong> — The origin of suffering: craving and attachment</li>
+        <li data-en><strong>Nirodha</strong> — The cessation of suffering through liberation</li>
+        <li data-en><strong>Magga</strong> — The Noble Eightfold Path to liberation</li>
+        <li data-ja><strong>苦諦</strong> — 苦しみの真実</li>
+        <li data-ja><strong>集諦</strong> — 苦しみの原因：渇望と執着</li>
+        <li data-ja><strong>滅諦</strong> — 苦しみの滅：解脱</li>
+        <li data-ja><strong>道諦</strong> — 八正道</li>
+      </ul>
+    </div>
+    <div class="info-card ic-blue">
+      <h2 data-en>☸ Dr. B. R. Ambedkar & Buddhism</h2>
+      <h2 data-ja>☸ アンベードカル博士と仏教</h2>
+      <p data-en>Dr. Bhimrao Ramji Ambedkar (1891–1956) was a jurist, economist, social reformer, and the principal architect of the Indian Constitution. On October 14, 1956, he led approximately 600,000 followers in a historic mass conversion to Buddhism at Deekshabhoomi, Nagpur.</p>
+      <p data-ja>ビームラーオ・ラームジー・アンベードカル博士（1891–1956）は法学者、経済学者、社会改革者であり、インド憲法の主要起草者です。1956年10月14日、ナーグプルのディークシャブーミで約60万人の信者と仏教に改宗しました。</p>
+    </div>
+    <div class="info-card ic-green">
+      <h2 data-en>☸ Saichoji Temple — Our Japanese Connection</h2>
+      <h2 data-ja>☸ 西光寺 — 私たちの日本とのつながり</h2>
+      <p data-en>Saichoji is a revered Buddhist temple in Japan that has developed a meaningful and enduring relationship with Pannya Metta Sangha. This Indo-Japanese Buddhist connection embodies the universal spirit of the Dhamma, transcending cultural and national boundaries.</p>
+      <p data-ja>西光寺は日本の尊敬される仏教寺院で、パンニャ・メッタ・サンガと意義深い永続的な関係を築いてきました。</p>
+    </div>
+    <div class="back-wrap">
+      <button class="back-btn" onclick="showMain()" data-en>← Back to Home</button>
+      <button class="back-btn" onclick="showMain()" data-ja>← ホームに戻る</button>
+    </div>
+  </div>
+</div>
+
+<div id="page-pms-about" class="subpage">
+  <div class="sp-hero sp-about">
+    <div class="date-badge b-blue" data-en>Est. 1982</div>
+    <div class="date-badge b-blue" data-ja>1982年設立</div>
+    <h1 data-en>About Pannya Metta Sangha</h1>
+    <h1 data-ja>パンニャ・メッタ・サンガについて</h1>
+    <p class="sp-hero-sub" data-en>A spiritual and social organisation rooted in the teachings of the Buddha, dedicated to wisdom, compassion, and community welfare since 1982.</p>
+    <p class="sp-hero-sub" data-ja>1982年から仏陀の教えに根ざし、智慧、慈悲、地域福祉に専念する精神的・社会的組織。</p>
+  </div>
+  <div class="sp-content">
+    <div class="info-card ic-blue">
+      <h2 data-en>🏛️ History & Founding Vision</h2>
+      <h2 data-ja>🏛️ 歴史と設立ビジョン</h2>
+      <p data-en>Pannya Metta Sangha was founded in 1982 (Registered No. MAH 586/82, F-3849(NAG)) with a vision to create a compassionate community grounded in Buddhist values. Born in the wake of Dr. Ambedkar's historic conversion movement, the Sangha emerged as a beacon of hope for communities seeking spiritual and social transformation.</p>
+      <p data-ja>パンニャ・メッタ・サンガは1982年に設立されました（登録番号：MAH 586/82, F-3849(NAG)）。アンベードカル博士の歴史的な改宗運動の後に生まれ、精神的・社会的変革を求めるコミュニティの希望の光となりました。</p>
+    </div>
+    <div class="info-card ic-gold">
+      <h2 data-en>📿 Buddhist Philosophy</h2>
+      <h2 data-ja>📿 仏教哲学</h2>
+      <p data-en>At the heart of Pannya Metta Sangha's mission is the living application of Buddhist philosophy. We draw equally from the Theravada tradition's emphasis on meditation and personal liberation, and from Dr. Ambedkar's Navayana interpretation which foregrounds social equality and collective action.</p>
+      <p data-ja>パンニャ・メッタ・サンガの使命の核心は仏教哲学の生きた応用です。テーラワーダの伝統とアンベードカル博士のナヴァヤーナの解釈を等しく取り込んでいます。</p>
+    </div>
+    <div class="info-card ic-green">
+      <h2 data-en>🌍 Community Welfare Work</h2>
+      <h2 data-ja>🌍 地域福祉活動</h2>
+      <div class="stats-row">
+        <div class="stat-box"><div class="stat-num">40+</div><div class="stat-label" data-en>Years of Service</div><div class="stat-label" data-ja>奉仕の年月</div></div>
+        <div class="stat-box"><div class="stat-num">500+</div><div class="stat-label" data-en>Annual Eye Surgeries</div><div class="stat-label" data-ja>年間眼科手術</div></div>
+        <div class="stat-box"><div class="stat-num">32</div><div class="stat-label" data-en>Children at Balsadan</div><div class="stat-label" data-ja>バルサダンの子どもたち</div></div>
+        <div class="stat-box"><div class="stat-num">5L+</div><div class="stat-label" data-en>Pilgrim Visitors</div><div class="stat-label" data-ja>巡礼者</div></div>
+      </div>
+    </div>
+    <div class="back-wrap">
+      <button class="back-btn" onclick="showMain()" data-en>← Back to Home</button>
+      <button class="back-btn" onclick="showMain()" data-ja>← ホームに戻る</button>
+    </div>
+  </div>
+</div>
+
+
+
+<!-- Feb 6 -->
+<div id="page-feb6" class="subpage">
+  <div class="sp-hero sp-feb6">
+    <div class="date-badge b-blue" data-en>Memorial Services · Day 1</div>
+    <div class="date-badge b-blue" data-ja>追悼サービス・第1日</div>
+    <h1 data-en>6th February — Prajñagiri</h1>
+    <h1 data-ja>2月6日 — プラドニャギリ</h1>
+    <p class="sp-hero-sub" data-en>Opening Day at Prajñagiri, Dongargarh — honouring the sacred hilltop Buddha.</p>
+    <p class="sp-hero-sub" data-ja>ドンガルガル・プラドニャギリでの開幕日。</p>
+  </div>
+  <div class="sp-content">
+    <div class="info-card ic-blue">
+      <h2 data-en>🏔️ History of Prajñagiri</h2><h2 data-ja>🏔️ プラドニャギリの歴史</h2>
+      <p data-en>Prajñagiri — the "Hill of Wisdom" — is a spiritually significant mountain located in Dongargarh at 200m above sea level. The International Buddhist Conference held here on 6th February 2017 drew participants from Japan, Thailand, Sri Lanka, Tibet, Korea, Taiwan, and over 5 lakh devotees.</p>
+      <p data-ja>プラドニャギリ（「智慧の丘」）は海抜200メートルのドンガルガル地方の霊山です。2017年2月6日の国際仏教会議には50万人以上が集まりました。</p>
+    </div>
+    <div class="back-wrap">
+      <button class="back-btn" onclick="showMain()" data-en>← Back to Home</button>
+      <button class="back-btn" onclick="showMain()" data-ja>← ホームに戻る</button>
+    </div>
+  </div>
+</div>
+
+<!-- Feb 7 -->
+<div id="page-feb7" class="subpage">
+  <div class="sp-hero sp-feb7">
+    <div class="date-badge b-green" data-en>Memorial Services · Day 2</div>
+    <div class="date-badge b-green" data-ja>追悼サービス・第2日</div>
+    <h1 data-en>7th February — Dhammasangoshti</h1>
+    <h1 data-ja>2月7日 — ダンマサンガシュティ</h1>
+    <p class="sp-hero-sub" data-en>The Grand Buddhist Convention.</p>
+    <p class="sp-hero-sub" data-ja>盛大な仏教大会。</p>
+  </div>
+  <div class="sp-content">
+    <div class="year-tabs">
+      <button class="year-tab active" onclick="switchYear('2025')" id="tab-2025">2025</button>
+      <button class="year-tab" onclick="switchYear('2026')" id="tab-2026">2026</button>
+    </div>
+    <div class="year-content active" id="year-2025">
+      <div class="info-card ic-green">
+        <h2 data-en>📅 Dhammasangoshti 2025</h2><h2 data-ja>📅 ダンマサンガシュティ 2025</h2>
+        <p data-en>The 2025 Dhammasangoshti was a landmark gathering at Mahasamadhibhumi, Pauni — bringing together Buddhist scholars, monks, devotees, and community members from across India and internationally.</p>
+        <p data-ja>2025年のダンマサンガシュティはパウニのマハーサマーディブーミで開催された画期的な集会でした。</p>
+        <a href="" class="pdf-link">📄 Download 2025 Magazine</a>
+      </div>
+    </div>
+    <div class="year-content" id="year-2026">
+      <div class="info-card ic-green">
+        <h2 data-en>📅 Dhammasangoshti 2026</h2><h2 data-ja>📅 ダンマサンガシュティ 2026</h2>
+        <p data-en>Dhammasangoshti 2026 continues the grand tradition with expanded programs and international participation.</p>
+        <p data-ja>ダンマサンガシュティ2026は拡張されたプログラムで盛大な伝統を継続します。</p>
+      </div>
+    </div>
+    <div class="back-wrap">
+      <button class="back-btn" onclick="showMain()" data-en>← Back to Home</button>
+      <button class="back-btn" onclick="showMain()" data-ja>← ホームに戻る</button>
+    </div>
+  </div>
+</div>
+
+<!-- Feb 8 -->
+<div id="page-feb8" class="subpage">
+  <div class="sp-hero sp-feb8">
+    <div class="date-badge b-purple" data-en>Memorial Services · Day 3</div>
+    <div class="date-badge b-purple" data-ja>追悼サービス・第3日</div>
+    <h1 data-en>8th February — Mahasamadhibhumi Dhammotsav</h1>
+    <h1 data-ja>2月8日 — マハーサマーディブーミ・ダンモトサブ</h1>
+    <p class="sp-hero-sub" data-en>The Grand Dhammotsav at Mahasamadhi Bhoomi.</p>
+    <p class="sp-hero-sub" data-ja>マハーサマーディ・ブーミでの壮大なダンモトサブ。</p>
+  </div>
+  <div class="sp-content">
+    <div class="info-card ic-purple">
+      <h2 data-en>🚩 Dhammadhvaj Rally & Vandana</h2><h2 data-ja>🚩 ダンマドヴァジャ・ラリーと礼拝</h2>
+      <p data-en>Thousands of devotees march from nearby towns to Mahasamadhibhumi carrying the Buddhist flag, followed by the Vandana ceremony at the Maha Stupa and a community vegetarian feast.</p>
+      <p data-ja>何千人もの信者が近隣の町からマハーサマーディブーミに行進し、大仏塔での礼拝と菜食饗宴が続きます。</p>
+    </div>
+    <div class="back-wrap">
+      <button class="back-btn" onclick="showMain()" data-en>← Back to Home</button>
+      <button class="back-btn" onclick="showMain()" data-ja>← ホームに戻る</button>
+    </div>
+  </div>
+</div>
+
+<!-- Balaghat -->
+<div id="page-balaghat" class="subpage">
+  <div class="sp-hero sp-balaghat">
+    <div class="date-badge b-green" data-en>Balaghat Program</div>
+    <div class="date-badge b-green" data-ja>バラガット・プログラム</div>
+    <h1 data-en>Balaghat — Triratna Buddha Vihar</h1>
+    <h1 data-ja>バラガット — トリラトナ・ブッダ・ヴィハーラ</h1>
+    <p class="sp-hero-sub" data-en>The Opening of Triratna Buddha Vihar in Balaghat.</p>
+    <p class="sp-hero-sub" data-ja>バラガットのトリラトナ・ブッダ・ヴィハーラ開所式。</p>
+  </div>
+  <div class="sp-content">
+    <div class="info-card ic-green">
+      <h2 data-en>🧘 Triratna Buddha Vihar</h2><h2 data-ja>🧘 トリラトナ・ブッダ・ヴィハーラ</h2>
+      <p data-en>The Triratna Buddha Vihar in Balaghat serves as a meditation centre, dhamma study hall, and community gathering space for the local Buddhist community in Madhya Pradesh.</p>
+      <p data-ja>バラガットのトリラトナ・ブッダ・ヴィハーラは瞑想センター、ダンマ学習ホール、コミュニティ集合場所として機能します。</p>
+    </div>
+    <div class="back-wrap">
+      <button class="back-btn" onclick="showMain()" data-en>← Back to Home</button>
+      <button class="back-btn" onclick="showMain()" data-ja>← ホームに戻る</button>
+    </div>
+  </div>
+</div>
+
+<!-- President subpage -->
+<div id="page-president" class="subpage">
+  <div class="sp-hero sp-president">
+    <div class="date-badge b-purple" data-en>Leadership</div>
+    <div class="date-badge b-purple" data-ja>指導者</div>
+    <h1 data-en>Venerable Sangharatna Manake</h1>
+    <h1 data-ja>僧侶サンガラトナ・マナケ師</h1>
+    <p class="sp-hero-sub" data-en>President of Pannya Metta Sangha — a guiding light of wisdom, compassion, and selfless service.</p>
+    <p class="sp-hero-sub" data-ja>パンニャ・メッタ・サンガ会長 — 智慧、慈悲、無私の奉仕の導きの光。</p>
+  </div>
+  <div class="sp-content">
+    <!-- 5 photos in president subpage -->
+    <div class="info-card ic-purple">
+      <h2 data-en>🖼️ Photo Gallery</h2>
+      <h2 data-ja>🖼️ フォトギャラリー</h2>
+      <div class="photo-strip-5">
+        <div class="ps-ph" style="background:linear-gradient(135deg,#ede9fe,#c4b5fd);"><img src="pmsimg/president_1.jpg" alt="President 1" onerror="this.outerHTML='<span>🙏</span>'"></div>
+        <div class="ps-ph" style="background:linear-gradient(135deg,#ede9fe,#c4b5fd);"><img src="pmsimg/president_2.jpg" alt="President 2" onerror="this.outerHTML='<span>☸️</span>'"></div>
+        <div class="ps-ph" style="background:linear-gradient(135deg,#ede9fe,#c4b5fd);"><img src="pmsimg/name.png" alt="President 3" onerror="this.outerHTML='<span>🧘</span>'"></div>
+        <div class="ps-ph" style="background:linear-gradient(135deg,#ede9fe,#c4b5fd);"><img src="pmsimg/president_4.jpg" alt="President 4" onerror="this.outerHTML='<span>🌸</span>'"></div>
+        <div class="ps-ph" style="background:linear-gradient(135deg,#ede9fe,#c4b5fd);"><img src="pmsimg/president_5.jpg" alt="President 5" onerror="this.outerHTML='<span>🕊️</span>'"></div>
+      </div>
+    </div>
+    <div class="info-card ic-purple">
+      <h2 data-en>🙏 Biography & Leadership</h2><h2 data-ja>🙏 経歴とリーダーシップ</h2>
+      <div class="leader-grid">
+        <img src="pmsimg/name.png" alt="Venerable Sangharatna Manake" class="leader-photo" onerror="this.outerHTML='<div class=\'leader-photo-ph\'>🙏</div>'">
+        <div>
+          <p data-en>Venerable Sangharatna Manake is the President and spiritual guide of Pannya Metta Sangha. He has dedicated his life to the propagation of the Dhamma and the welfare of all beings, integrating Buddhist practice with active social engagement across 40+ years of service.</p>
+          <p data-ja>サンガラトナ・マナケ師はパンニャ・メッタ・サンガの会長であり精神的ガイドです。40年以上にわたりダンマの普及とすべての存在の福祉に生涯を捧げてきました。</p>
+        </div>
+      </div>
+    </div>
+    <div class="back-wrap">
+      <button class="back-btn" onclick="showMain()" data-en>← Back to Home</button>
+      <button class="back-btn" onclick="showMain()" data-ja>← ホームに戻る</button>
+    </div>
+  </div>
+</div>
+
+<!-- Horisawa subpage -->
+<div id="page-horisawa" class="subpage">
+  <div class="sp-hero sp-horisawa">
+    <div class="date-badge b-green" data-en>Japan Connection</div>
+    <div class="date-badge b-green" data-ja>日本とのつながり</div>
+    <h1 data-en>Horisawaji</h1>
+    <h1 data-ja>堀沢師</h1>
+    <p class="sp-hero-sub" data-en>A bridge between India and Japan — strengthening the Indo-Japanese Dhamma connection.</p>
+    <p class="sp-hero-sub" data-ja>インドと日本の橋渡し。</p>
+  </div>
+  <div class="sp-content">
+    <div class="info-card ic-green">
+      <h2 data-en>🌸 Biography & Contributions</h2><h2 data-ja>🌸 経歴と貢献</h2>
+      <p data-en>Horisawaji is a respected Japanese Buddhist monk deeply connected to the Ambedkarite Buddhist movement in India. His collaboration with Pannya Metta Sangha includes participation in the Dhammasangoshti convention, contributions to the Japanese edition of the magazine, and support for the Balsadan children's home.</p>
+      <p data-ja>堀沢師はインドのアンベードカル派仏教運動に深く結びついた尊敬される日本の仏教僧です。</p>
+    </div>
+    <div class="back-wrap">
+      <button class="back-btn" onclick="showMain()" data-en>← Back to Home</button>
+      <button class="back-btn" onclick="showMain()" data-ja>← ホームに戻る</button>
+    </div>
+  </div>
+</div>
+
+<!-- School subpage -->
+<div id="page-school" class="subpage">
+  <div class="sp-hero sp-school">
+    <div class="date-badge b-green" data-en>Education</div>
+    <div class="date-badge b-green" data-ja>教育</div>
+    <h1 data-en>Pannya Metta Sangha School</h1>
+    <h1 data-ja>パンニャ・メッタ・サンガ学校</h1>
+    <p class="sp-hero-sub" data-en>Nurturing minds with wisdom — classes 1 to 10, rooted in Buddhist values.</p>
+    <p class="sp-hero-sub" data-ja>智慧で心を育む — 1〜10年生、仏教の価値観に根ざした学校。</p>
+  </div>
+  <div class="sp-content">
+    <div class="info-card ic-green">
+      <h2 data-en>🏫 School Overview</h2><h2 data-ja>🏫 学校概要</h2>
+      <p data-en>Pannya Metta Sangha School offers classes from 1 to 10 with a curriculum rooted in Buddhist values and academic excellence.</p>
+      <p data-ja>パンニャ・メッタ・サンガ学校は1〜10年生のクラスを提供し、仏教の価値観と学術的卓越性に根ざしています。</p>
+    </div>
+    <div class="back-wrap">
+      <button class="back-btn" onclick="showMain()" data-en>← Back to Home</button>
+      <button class="back-btn" onclick="showMain()" data-ja>← ホームに戻る</button>
+    </div>
+  </div>
+</div>
+
+<!-- Social subpage -->
+<div id="page-social" class="subpage">
+  <div class="sp-hero sp-social">
+    <div class="date-badge b-red" data-en>Community Health & Welfare</div>
+    <div class="date-badge b-red" data-ja>地域の健康と福祉</div>
+    <h1 data-en>Social Work</h1>
+    <h1 data-ja>社会奉仕活動</h1>
+    <p class="sp-hero-sub" data-en>From medical camps to mobile hospitals — serving underserved communities with compassion.</p>
+    <p class="sp-hero-sub" data-ja>医療キャンプから移動病院まで。</p>
+  </div>
+  <div class="sp-content">
+    <div class="info-card ic-red">
+      <h2 data-en>🏥 Medical Outreach</h2><h2 data-ja>🏥 医療アウトリーチ</h2>
+      <p data-en>The Sangha organises regular medical camps in Sironcha, Gadchiroli and beyond — bringing free healthcare to communities historically isolated from mainstream health infrastructure.</p>
+      <p data-ja>サンガはシロンチャ・ガドチロリ等で定期的な医療キャンプを組織します。</p>
+    </div>
+    <div class="back-wrap">
+      <button class="back-btn" onclick="showMain()" data-en>← Back to Home</button>
+      <button class="back-btn" onclick="showMain()" data-ja>← ホームに戻る</button>
+    </div>
+  </div>
+</div>
+
+<!-- Magazine subpage -->
+<div id="page-magazine" class="subpage">
+  <div class="sp-hero sp-magazine">
+    <div class="date-badge b-blue" data-en>Publications</div>
+    <div class="date-badge b-blue" data-ja>出版物</div>
+    <h1 data-en>Mahasamadhibhumi Magazine</h1>
+    <h1 data-ja>マハーサマーディブーミ雑誌</h1>
+    <p class="sp-hero-sub" data-en>Our annual publication — capturing the spirit of the Dhammasangoshti.</p>
+    <p class="sp-hero-sub" data-ja>年次出版物。</p>
+  </div>
+  <div class="sp-content">
+    <div class="info-card ic-blue">
+      <h2 data-en>📥 Download Issues</h2><h2 data-ja>📥 号のダウンロード</h2>
+      <div style="display:flex;flex-wrap:wrap;gap:12px;margin-top:8px;">
+        <a href="" class="pdf-link">📄 Magazine 2025</a>
+        <a href="" class="pdf-link">📄 Magazine 2026</a>
+        <a href="" class="pdf-link pdf-link-gold">🌸 Japanese Magazine</a>
+      </div>
+    </div>
+    <div class="back-wrap">
+      <button class="back-btn" onclick="showMain()" data-en>← Back to Home</button>
+      <button class="back-btn" onclick="showMain()" data-ja>← ホームに戻る</button>
+    </div>
+  </div>
+</div>
+
+<!-- Essay subpage -->
+<div id="page-essay" class="subpage">
+  <div class="sp-hero sp-essay">
+    <div class="date-badge b-purple" data-en>Annual Program</div>
+    <div class="date-badge b-purple" data-ja>年次プログラム</div>
+    <h1 data-en>Mahasamadhibhumi Essay Competition</h1>
+    <h1 data-ja>マハーサマーディブーミ作文コンクール</h1>
+    <p class="sp-hero-sub" data-en>Inspiring young minds through the power of words.</p>
+    <p class="sp-hero-sub" data-ja>言葉の力を通じて若い心を刺激する。</p>
+  </div>
+  <div class="sp-content">
+    <div class="info-card ic-purple">
+      <h2 data-en>✏️ Competition Overview</h2><h2 data-ja>✏️ コンクール概要</h2>
+      <p data-en>The Mahasamadhibhumi Essay Competition is an annual academic event engaging students from primary to post-graduate level with Buddhist philosophy, Dr. Ambedkar's legacy, and themes of social justice and community welfare.</p>
+      <p data-ja>マハーサマーディブーミ作文コンクールは学生たちを仏教哲学、アンベードカル博士の遺産、社会正義のテーマに参加させる年次学術行事です。</p>
+    </div>
+    <div class="back-wrap">
+      <button class="back-btn" onclick="showMain()" data-en>← Back to Home</button>
+      <button class="back-btn" onclick="showMain()" data-ja>← ホームに戻る</button>
+    </div>
+  </div>
+</div>
+
+<!-- HQ subpage -->
+<div id="page-hq" class="subpage">
+  <div class="sp-hero sp-hq">
+    <div class="date-badge b-blue" data-en>Nagpur, Maharashtra</div>
+    <div class="date-badge b-blue" data-ja>マハーラーシュトラ州ナーグプル</div>
+    <h1 data-en>Pannya Metta Sangha Headquarters</h1>
+    <h1 data-ja>パンニャ・メッタ・サンガ本部</h1>
+    <p class="sp-hero-sub" data-en>Buddha Nag Vihara, Hardasnagar, Nagpur.</p>
+    <p class="sp-hero-sub" data-ja>ナーグプル・ハルダースナガルのブッダ・ナグ・ヴィハーラ。</p>
+  </div>
+  <div class="sp-content">
+    <div class="info-card ic-blue">
+      <h2 data-en>🏢 Headquarters</h2><h2 data-ja>🏢 本部</h2>
+      <p data-en>The Head Office is located at Buddha Nag Vihara, Cr. No. 15/21, Hardasnagar (Lashkaribagh), Nagpur, Maharashtra, India. Registered under No. MAH 586/82, F-3849(NAG).</p>
+      <p data-ja>本部はインド・マハーラーシュトラ州ナーグプル、ハルダースナガル Cr. No. 15/21のブッダ・ナグ・ヴィハーラにあります。</p>
+    </div>
+    <div class="back-wrap">
+      <button class="back-btn" onclick="showMain()" data-en>← Back to Home</button>
+      <button class="back-btn" onclick="showMain()" data-ja>← ホームに戻る</button>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════ INITIATIVE MODAL ══════════════ -->
+<div class="modal-overlay" id="modalOverlay" onclick="handleModalClick(event)">
+  <div class="modal" id="modalBox">
+    <div class="modal-header">
+      <div class="modal-title" id="modalTitle"></div>
+      <div class="modal-subtitle" id="modalSubtitle"></div>
+      <button class="modal-close" onclick="closeModal()">✕</button>
+    </div>
+    <div class="modal-body" id="modalBody"></div>
+  </div>
+</div>
+
+<!-- ══════════════ JAVASCRIPT ══════════════ -->
+<script>
+/* ── SPLASH ── */
+function skipSplash(){
+  document.getElementById('splashScreen').classList.add('fade-out');
+  document.getElementById('mainSite').style.display='block';
+  setTimeout(()=>{document.getElementById('splashScreen').style.display='none';},1000);
+}
+
+// Generate particles
+(function(){
+  const container=document.getElementById('splashParticles');
+  if(!container) return;
+  for(let i=0;i<30;i++){
+    const p=document.createElement('div');
+    p.className='splash-particle';
+    const size=Math.random()*4+2;
+    const left=Math.random()*100;
+    const delay=Math.random()*8;
+    const duration=Math.random()*6+6;
+    p.style.cssText=`width:${size}px;height:${size}px;left:${left}%;animation-duration:${duration}s;animation-delay:${delay}s;`;
+    container.appendChild(p);
+  }
+})();
+
+window.addEventListener('load', () => {
+  setTimeout(() => {
+    skipSplash();
+    setTimeout(() => {
+      document.getElementById('splashScreen').style.display = 'none';
+    }, 1000);
+  }, 5500);
+});
+
+/* ── LANGUAGE ── */
+function setLang(lang) {
+  if (lang === 'ja') {
+    document.body.classList.add('ja');
+    document.getElementById('langOptJa').classList.add('active-lang');
+    document.getElementById('langOptEn').classList.remove('active-lang');
+  } else {
+    document.body.classList.remove('ja');
+    document.getElementById('langOptEn').classList.add('active-lang');
+    document.getElementById('langOptJa').classList.remove('active-lang');
+  }
+}
+
+/* ── PAGE ROUTING ── */
+let currentPage = 'main';
+function showMain() {
+  document.getElementById('mainSite').style.display = 'block';
+  document.querySelectorAll('.subpage').forEach(p => p.classList.remove('active'));
+  currentPage = 'main';
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+function showPage(id) {
+  document.getElementById('mainSite').style.display = 'none';
+  document.querySelectorAll('.subpage').forEach(p => p.classList.remove('active'));
+  const t = document.getElementById('page-' + id);
+  if (t) { t.classList.add('active'); currentPage = id; }
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+function navTo(id) {
+  if (currentPage !== 'main') {
+    showMain();
+    setTimeout(() => { const el = document.getElementById(id); if (el) el.scrollIntoView({behavior:'smooth'}); }, 300);
+  } else {
+    const el = document.getElementById(id); if (el) el.scrollIntoView({behavior:'smooth'});
+  }
+}
+
+/* ── YEAR TAB ── */
+function switchYear(year) {
+  document.querySelectorAll('.year-tab').forEach(t => t.classList.remove('active'));
+  document.querySelectorAll('.year-content').forEach(c => c.classList.remove('active'));
+  const tab = document.getElementById('tab-' + year);
+  const content = document.getElementById('year-' + year);
+  if (tab) tab.classList.add('active');
+  if (content) content.classList.add('active');
+}
+
+/* ── MODAL ── */
+const isJa = () => document.body.classList.contains('ja');
+
+/* Photo strip HTML helper */
+function photoStrip(imgArr, bg='linear-gradient(135deg,#dbeafe,#bfdbfe)'){
+  return `<div class="modal-photo-strip">${imgArr.map((src,i)=>`<div class="ps-img" style="background:${bg};"><img src="${src}" alt="Photo ${i+1}" onerror="this.style.display='none'"></div>`).join('')}</div>`;
+}
+
+const modalData = {
+  bhoomi: {
+    en: {
+      title: 'Mahasamadhibhumi',
+      subtitle: 'Sacred Memorial Ground · Ruyad (Sindhpuri), Pauni, Bhandara',
+      body: `<div class="modal-hero-img"><img src="pmsimg/maha1.6.jpeg" alt="Mahasamadhibhumi" onerror="this.parentNode.style.fontSize='5rem';this.parentNode.innerHTML='🕌'"></div>
+      <p>Buddhadhamma , which originated in India about 2,600 years ago, Sadly, India had lived through a long and tragic history without Buddhism until its revival about 70 years ago. To liberate India from that darkness, Bodhisattva Babasaheb Ambedkar rekindled the lamp of Buddhadhamma on October 14, 1956. With the objective of spreading ever more widely the light of Buddhism rekindled by Bodhisattva Babasaheb Ambedkar , and inspired by the vision that the Ekyanae(One Vehicle).<p>
+      <p>Buddhadhamma proclaimed by Bodhisattva Dengyo Daishi Saicho known the founder of Japanese Tendai sangha should also flourish in India, in the year 1982 PMS Panna Metta Sangha was established. Following the official recognition of the association, 6.5 acres of land were purchased in 1982 at Ruyad (Shindpuri)Village in Pauni, Bhandara District, located approximately 90 kilometers southeast of Nagpur. The area is closely associated with Emperor Ashoka, one of the greatest supporters and protectors of Buddhadhamma.</p>
+      <p> Upon the completion of President most venerable Sangharatna’s studies at Mount Hiei, Japan, the organization officially launched its activities. In 1986, construction began on the old MahaSamadhiBhoomi Vihara and the First Monks’ Quarter(bhiksyu niwas). Following more than 35 years of continuous religious and social activities, the opening ceremony of the MahaSamadhiBhoomi MahaVihara was solemnly held on February 8, 2007. MahaSamadhiBhoomi MahaVihara has also been officially authorized as an overseas temple of the Japanese Tendai Sangha.</p>
+      <p>The MahaSamadhiBhoomi MahaVihara was established with the following objectives: More than by individuals or circumstances, people are ultimately shaped by the ideals, values, and spiritual foundations upon which they depend. The MahaSamadhiBhoomi MahaVihara was established to serve as a lasting spiritual foundation. It welcomes practitioners from within Japan and overseas as a place of Buddhadhamma training, provides a sanctuary of faith and devotion for pilgrims and pilgrims, and stands as a sacred place dedicated to prayers for the harmonious coexistence of all living beings and the realization of world peace.<p>
+      <p>Since 1987, the annual MahaSamadhiBhoomi Memorial Ceremony (dhammotsaw) has been solemnly observed on February 8, attracting over 100,000 pilgrims from both India and abroad each year. A solemn commemorative service is scheduled to be held on February 8, 2027, marking the 45th anniversary of the establishment of PMS Pannya Metta Sangha, the 40th anniversary of the completion and consecration of the old MahaSamadhiBhoomi Vihara , and the 20th anniversary of the completion and consecration of the MahaSamadhiBhoomi Vihara.<p>
+      <p>It is expected that the ceremony will be conducted on a much grander scale than in previous years. In addition, a large number of     pilgrims It is expected that the ceremony will be conducted on a much grander scale than in previous years. In addition, a large number of pilgrims gather during special observances such as the monthly full-moon chanting . Even on ordinary weekdays, the site is bustling with worshippers, students on educational excursions, and other visitors, making it one of the major Buddhist pilgrimage centers in Central India.<p>
+      <div class="modal-stat-row">
+        <div class="modal-stat"><div class="modal-stat-num">6.5</div><div class="modal-stat-label">Acres</div></div>
+        <div class="modal-stat"><div class="modal-stat-num">2007</div><div class="modal-stat-label">Stupa Inaugurated</div></div>
+        <div class="modal-stat"><div class="modal-stat-num">1L+</div><div class="modal-stat-label">Annual Visitors</div></div>
+      </div>
+      <h4>Photo Gallery</h4>
+      ${photoStrip(['pmsimg/maha1.1.jpeg','pmsimg/maha1.2.jpeg','pmsimg/maha1.3.jpeg','pmsimg/maha1.4.jpeg','pmsimg/maha1.5.jpeg'])}
+      <div class="modal-tag-row"><span class="modal-tag">Wainganga River</span><span class="modal-tag">Maha Stupa</span><span class="modal-tag">Bhandara</span><span class="modal-tag">Pilgrimage</span></div>`
+    },
+    ja: {
+      title: 'マハーサマーディブーミ',
+      subtitle: '神聖な追悼の地・パウニ、バンダーラ',
+      body: `<div class="modal-hero-img"><img src="pmsimg/maha1.6.jpeg" alt="Mahasamadhibhumi" onerror="this.parentNode.style.fontSize='5rem';this.parentNode.innerHTML='🕌'"></div>
+      <p>約2600年前にインドで息吹をあげた仏教は約800年前に一部地域を例外にインドから姿を消しました。残念なことに、70年前まで、インドは仏教不在の長く悲しい歴史を紡いできました。インドをその暗闇から解放するために,1956年10月14日に,アンベドカル菩薩が仏教と言う灯火を再燃させました。その灯火を最大化することを、また日本天台宗の開祖伝教大師が提唱した、一乗仏教がインドの大地にも根付くようにとの願意から、1982年にPMSパンニャメッタサンガは発足、協会が正式に認可されたのを機に、ナグプール東南90キロに 位置する仏教の外護者であったアショーカ王と縁深い、バンダラ県ポー二市ルヤード村に6.5エーカの土地を購入、 サンガラトナ理事長の比叡山留学終了を機に活動を開始、1986年禅定林旧本堂・第一僧坊工事を皮切りに、以後諸活動を継続する中、35年以上が経過、 2007年2月8日に、天台宗海外寺院禅定林大本堂の落慶法要が厳修されました。大本堂建立の趣旨は 、 「依身より依所」 、人は個人や環境に依って形成される以上に、 その拠りどころによって形成されます。 禅定林大本堂は、その依所となり、 国内外からの修行者受け入れの修行道場であり、参拝者の信仰 の場であり、 全ての命の共生、 世界平和を祈る場として建立されま した。1987年以後、毎年2月8日に、毎年国内外合わせて10万人を越える参拝者の中禅定林例祭法要が行われ、2027年2月8日はPMSパンニャ・メッタ・サンガ活動開始45周年、禅定林旧本堂落慶40周年、大本堂落慶20周年法要を厳修予定、例年以上の盛大な法要になると思われます。その他にも、毎月の満月等の特別法要時にも多く の参加者が訪れ、平日も、 参拝者、学生の遠足等で賑わいをみせ、中部インドの一大聖地となっております。</p>
+      <div class="modal-stat-row">
+        <div class="modal-stat"><div class="modal-stat-num">6.5</div><div class="modal-stat-label">エーカー</div></div>
+        <div class="modal-stat"><div class="modal-stat-num">2007</div><div class="modal-stat-label">仏塔開幕</div></div>
+        <div class="modal-stat"><div class="modal-stat-num">1L+</div><div class="modal-stat-label">年間訪問者</div></div>
+      </div>
+      ${photoStrip(['pmsimg/maha1.1.jpeg','pmsimg/maha1.2.jpeg','pmsimg/maha1.3.jpeg','pmsimg/maha1.4.jpeg','pmsimg/maha1.5.jpeg'])}`
+    }
+  },
+  Prajñagiri: {
+    en: {
+      title: 'Prajñagiri',
+      subtitle: 'Hill of Wisdom · Dongargarh, Rajnandgaon, Chhattisgarh',
+      body: `<div class="modal-hero-img"><img src="pmsimg/prad.jpeg" alt="Prajñagiri" onerror="this.parentNode.style.fontSize='5rem';this.parentNode.innerHTML='🏔️'"></div>
+      <p> Prajyunya girl -Responding to the request of local followers of Buddhadhamma residents, most Venerable Sangharatna traveled to Dongargarh, Chhattisgarh, to sermon. There he bestowed the name “Prajñagiri” (Hill of Wisdom) upon a previously barren hill, approximately 60 meters high, located on the outskirts of the city. Having named the hill Prajñagiri, Venerable Sangharatna initiated Buddhist activities there in 1991 under the auspices of PMS Pannya Metta Sangha, which was originally founded as the Indo–Japan Buddhist Friend Association. In dedication to the harmonious coexistence of all creation—mountains, rivers, forests, and all living beings—and to the realization of world peace.</p>
+      <p>PMS Pannya Metta Sangha erected a 20-meter seated statue ( Dhyana Mudrā) of Shakyamuni Buddha on the summit of Prajyunya girl on February 6, 1998. The consecration and Eye-Opening Ceremony was conducted on a grand scale, attended by a large number of participants from India and overseas. “The World Peace Prayer Ceremony and World Buddhist Convention, “conducted annually on February 6 since 1991, marked its 35th observance 2026.<p>
+      <p>The annual Prajyunya girl Memorial Ceremony draws tens of thousands of pilgrims and devotees each year. The Prajyunya girl is also visited daily by large numbers of worshippers and visitors. A monastic residence and a training institute have been established on the top of hill , where Shivir (educational and spiritual training programs), especially for youth, are held regularly. Guided by the spirit of “forgetting oneself and benefiting others,” we are dedicated to fostering individuals who contribute to the happiness and welfare of all beings.</p>
+      <div class="modal-stat-row">
+        <div class="modal-stat"><div class="modal-stat-num">30ft</div><div class="modal-stat-label">Buddha Statue</div></div>
+        <div class="modal-stat"><div class="modal-stat-num">200m</div><div class="modal-stat-label">Above Sea Level</div></div>
+        <div class="modal-stat"><div class="modal-stat-num">1L+</div><div class="modal-stat-label">2017 Attendees</div></div>
+      </div>
+      <h4>Photo Gallery</h4>
+      ${photoStrip(['pmsimg/prad1.1.jpeg','pmsimg/prad1.2.jpeg','pmsimg/prad1.3.jpeg','pmsimg/prad1.4.jpeg','pmsimg/prad1.5.jpeg'],'linear-gradient(135deg,#1a3a6b,#2563eb)')}
+      <div class="modal-tag-row"><span class="modal-tag">Dongargarh</span><span class="modal-tag">Buddha Statue</span><span class="modal-tag">World Peace</span></div>`
+    },
+    ja: {
+      title: 'プラドニャギリ',
+      subtitle: '智慧の丘・ドンガルガル',
+      body: `<div class="modal-hero-img"><img src="pmsimg/prad.jpeg" alt="Prajñagiri" onerror="this.parentNode.style.fontSize='5rem';this.parentNode.innerHTML='🏔️'"></div>
+      <p>智恵山:地元民の要請によってチャッティスガル州ドンガルガル市に法話に行かれたサンガラトナ和尚が市郊外の、荒山だった約60メートルの小高い山を、プラジュニャギリ と命名、1991年よりPMSパンニャメッタサンガ(開始当時の協会名は、インド-ジャパン　ブッディスト フレンド　アソシエーション)としての活動を開始した。山川草木全ての共生、世界平和を祈念して、PMS パンニャ メッタ サンガによって1998年2月6日、智恵山上に20メートルの釈迦牟尼仏坐像(定印)を建立、国内外多くの方々の参加のもと盛大に開眼法要が行われた。1991年より毎年2月6日に継続して行なっております「世界平和祈願法要・世界仏教徒大会」は本年35回目となりました。毎年の智恵山の法要にも,数万人の参詣者があり、 日常も多くの参拝者が登山、山上には僧坊、 研修道場を併設、 随時青少年を中心に研修会を行い、己を忘れて他を利するの人材育成に努めています。</p>
+      ${photoStrip(['pmsimg/prad1.1.jpeg','pmsimg/prad1.2.jpeg','pmsimg/prad1.3.jpeg','pmsimg/prad1.4.jpeg','pmsimg/prad1.5.jpeg'],'linear-gradient(135deg,#1a3a6b,#2563eb)')}`
+    }
+  },
+  headquarters: {
+    en: {
+      title: 'Pannya Metta Sangha Headquarters',
+      subtitle: 'Buddha Nag Vihara · Hardasnagar, Nagpur, Maharashtra',
+      body: `<div class="modal-hero-img"><img src="pmsimg/hq1.1.jpeg" alt="Headquarters" onerror="this.parentNode.style.fontSize='5rem';this.parentNode.innerHTML='🕌'"></div>
+      <p>The Pannya Metta Sangha Head Office is located at Buddha Nag Vihara, Cr. No. 15/21, Hardasnagar (Lashkaribagh), Nagpur, Maharashtra, India. Registered under No. MAH 586/82, F-3849(NAG) since 1982.</p>
+      <h4>Photo Gallery</h4>
+      ${photoStrip(['pmsimg/hq1.6.jpeg','pmsimg/hq1.2.jpeg','pmsimg/hq1.3.jpeg','pmsimg/hq1.4.jpeg','pmsimg/hq1.5.jpeg',])}
+      <div class="modal-tag-row"><span class="modal-tag">Est. 1982</span><span class="modal-tag">Nagpur</span><span class="modal-tag">Reg. MAH 586/82</span></div>`
+    },
+    ja: {
+      title: 'パンニャ・メッタ・サンガ本部',
+      subtitle: 'ブッダ・ナグ・ヴィハーラ・ナーグプル',
+      body: `<div class="modal-hero-img"><img src="pmsimg/hq1.1.jpeg" alt="Headquarters" onerror="this.parentNode.style.fontSize='5rem';this.parentNode.innerHTML='🏛️'"></div>
+      <p>登録番号：MAH 586/82, F-3849(NAG)。1982年設立。</p>
+      ${photoStrip(['pmsimg/hq1.6.jpeg','pmsimg/hq1.2.jpeg','pmsimg/hq1.3.jpeg','pmsimg/hq1.4.jpeg','pmsimg/hq1.5.jpeg'])}`
+    }
+  },
+  school: {
+    en: {
+      title: 'Pannya Metta Sangha School',
+      subtitle: '⁠Pannya Metta School-Lighting One Corner (“Ichigu wo Terasu Nursery and Kindergarden")',
+      body: `<div class="modal-hero-img"><img src="pmsimg/school1.1.jpeg" alt="School" onerror="this.parentNode.style.fontSize='5rem';this.parentNode.innerHTML='🏫'"></div>
+      <p>Regardless of administrative directives issued by the Government of Maharashtra, many children from economically disadvantaged families are unable even to gain admission to nursery schools. As a result, they are often left behind not only in Academic education throughout their lives but also in the Character Formation and Emotional development fostered through early childhood education. In order to improve this situation and provide these children with opportunities for holistic growth and learning, we operate the Lighting One Corner Nursery and Kindergarden.</p>
+      <p><strong> ⁠Sakitama Primary School:</strong></p>
+      <p>Sakitama Primary School was established in June 2002. In compliance with the regulations of the state government, the school offers elementary education from Grade 1 to Grade 4.<p>
+      <p><strong> ⁠Miyako Junior High School:</strong></p>
+      <p>Pannya Metta Academy was established in 2002. In 2007, a new school building was constructed in Sugtnagar , North Nagpur, and the entire institution was relocated from rented premises to facilities owned by the Association. In accordance with government regulations, the Academy operates a secondary school providing education from Grade 5 to Grade 10. Its mission is to offer quality education, particularly to students from economically disadvantaged families, and to help them gain access to higher educational opportunities while fostering their overall personal development.</p>
+        <h4>Photo Gallery</h4>
+      ${photoStrip(['pmsimg/school1.21.jpeg','pmsimg/school1.2.jpeg','pmsimg/school1.3.jpeg','pmsimg/school1.4.jpeg','pmsimg/school1.5.jpeg','pmsimg/school1.6.jpeg','pmsimg/school1.7.jpeg','pmsimg/school1.8.jpeg','pmsimg/school1.10.jpeg','pmsimg/school1.11.jpeg','pmsimg/school1.12.jpeg',],'linear-gradient(135deg,#ecfdf5,#d1fae5)')}
+      <h4>Key Features</h4>
+      <ul><li>Classes from Grade 1 to Grade 10</li><li>Buddhist values integrated into curriculum</li><li>Annual Day celebration with cultural performances</li><li>Buddha Jayanti & Ambedkar Jayanti programs</li><li>Sports Day and inter-school competitions</li></ul>
+      <div class="modal-tag-row"><span class="modal-tag">Grades 1-10</span><span class="modal-tag">Buddhist Values</span><span class="modal-tag">Annual Day</span></div>`
+    },
+    ja: {
+      title: 'パンニャ・メッタ・サンガ学校',
+      subtitle: '1〜10年生',
+      body: `<div class="modal-hero-img"><img src="pmsimg/school1.1.jpeg" alt="School" onerror="this.parentNode.style.fontSize='5rem';this.parentNode.innerHTML='🏔️'"></div>
+      <p>パンニャメッタ学園一隅を照らす保育園 ・幼稚園。マハラシュトラ州、行政の指令いかんにかかわらず、貧困家庭の児 童は、保育園への入園すら思うままにならず、生涯を通して、学校教育は言うまでもなく、 情操教育からも取り残されることが多々あり、この現状の改善を目的に学園を運営しています。</p>
+      <p><strong>さきたま小学校:</strong></p>
+      <p>2002年6月に開校、州の規定に準じ、1から4年生までの学年がある。</p>
+      <p><strong>みやこ中学校:</strong></p>
+      <p>2002年にパンニャメッタ学園を開園したが、2007年に同北ナグプール　スガタナガル町に新校舎を建築、学園全体を借家から協会所有の建物に移転、 政府規定に従い、5年生から10年生までの中学校を運営、特に貧困 家庭生徒に優秀な高等教育を目的にしています。</p>
+      ${photoStrip(['pmsimg/school1.21.jpeg','pmsimg/school1.2.jpeg','pmsimg/school1.3.jpeg','pmsimg/school1.4.jpeg','pmsimg/school1.5.jpeg','pmsimg/school1.6.jpeg','pmsimg/school1.7.jpeg','pmsimg/school1.8.jpeg','pmsimg/school1.10.jpeg','pmsimg/school1.11.jpeg','pmsimg/school1.12.jpeg'],'linear-gradient(135deg,#ecfdf5,#d1fae5)')}`
+    }
+  },
+  balsadan: {
+    en: {
+      title: 'Pannya Metta Balsadan',
+      subtitle: "Children's Home · Sindhpuri, Pauni, Dist. Bhandara",
+      body: `<div class="modal-hero-img"><img src="pmsimg/bal1.3.jpeg" alt="Balsadan" onerror="this.parentNode.style.fontSize='5rem';this.parentNode.innerHTML='🏠'"></div>
+      <p>Pannya Metta Balsadan was established in 1991, utilizing a portion of the old MahaSamadhiBhoomi vihara . The Home began with seven children—four boys and three girls—who were facing various challenges related to religion, ethnicity, poverty, and caste discrimination. Although its operational system has been adjusted since the COVID-19 pandemic, the Home currently accommodates approximately twenty boys and twenty girls, ranging from primary school students to until the completion of their university education or more higher studies.<p> 
+      <p>The residents are diligently pursuing their studies in order to realize their dreams and aspirations.Since its establishment, more than 200 children and young adults have successfully graduated from the Home and gone on to build independent and meaningful lives in society.</p>
+      <div class="modal-stat-row">
+        <div class="modal-stat"><div class="modal-stat-num">32</div><div class="modal-stat-label">Children</div></div>
+        <div class="modal-stat"><div class="modal-stat-num">9</div><div class="modal-stat-label">Acres</div></div>
+        <div class="modal-stat"><div class="modal-stat-num">1995</div><div class="modal-stat-label">Established</div></div>
+      </div>
+      <h4>Photo Gallery</h4>
+      ${photoStrip(['pmsimg/bal1.5.jpeg','pmsimg/bal1.2.jpeg','pmsimg/bal1.3.jpeg','pmsimg/bal1.4.jpeg','pmsimg/bal.jpg'])}
+      <h4>New Balsadan</h4>
+      ${photoStrip(['pmsimg/nbal1.1.jpeg','pmsimg/nbal1.2.jpeg','pmsimg/nbal1.3.jpeg','pmsimg/nbal1.4.jpeg'])}
+      <div class="modal-tag-row"><span class="modal-tag">Orphan Children</span><span class="modal-tag">Est. 1995</span><span class="modal-tag">Education</span></div>`
+    },
+    ja: {
+      title: 'パンニャ・メッタ・バルサダン',
+      subtitle: '子どもの家・シンドプリ、パウニ',
+      body: `<div class="modal-hero-img"><img src="pmsimg/bal.jpg" alt="Balsadan" onerror="this.parentNode.style.fontSize='5rem';this.parentNode.innerHTML='🏠'"></div>
+      <p>1991年に禅定林旧本堂の一部 を利用、宗教、民族、貧困、カースト等の問題をかかえている、男子4 名女子3名の入園によって開園、 コロナ以来、平常時のシステムとは異なっているが、小学校から大学もしくは、それ以上の学業終了までの男女それ ぞれ20人が在籍、夢と希望を叶えるべく学業に邁進している。開園以来200名以上の在園者が巣立っている。</p>
+      <h4>フォトギャラリー</h4>
+      ${photoStrip(['pmsimg/bal1.5.jpeg','pmsimg/bal1.2.jpeg','pmsimg/bal1.3.jpeg','pmsimg/bal1.4.jpeg','pmsimg/bal.jpg'])}
+      <h4>ニュー・バルサダン</h4>
+      ${photoStrip(['pmsimg/nbal1.1.jpeg','pmsimg/nbal1.2.jpeg','pmsimg/nbal1.3.jpeg','pmsimg/nbal1.4.jpeg'])}`
+
+    }
+  },
+  library: {
+    en: {
+      title: 'Pannya Metta Sangha Library',
+      subtitle: 'Buddhist Knowledge Centre · Nagpur',
+      body: `<div class="modal-hero-img"><img src="pmsimg/lib1.2.jpeg" alt="Library" onerror="this.parentNode.style.fontSize='5rem';this.parentNode.innerHTML='🏔️'"></div>
+      <p>The Pannya Metta Library was established in April 1995 in a rented private house located in the center of Pauni .Subsequently, an old house located near Ambedkar Square in the same town was acquired. However, due to age-related deterioration and extensive flood damage, the building eventually collapsed, making its continued use impossible. As a result, a new building owned by the Association was constructed and completed in 2006.<p>
+      <p>While serving as a center for reading and research through its collection of newspapers, magazines, books, and other publications, Recognizing that many students lack adequate study conditions due to insufficient household infrastructure, including electricity, and crowded family circumstances, the Library offers a study hall that is accessible throughout the day. Educational materials and reference books are also kept on site and are made available free of charge to students.<p>
+      <p>The Library serves as a vital center of learning for many students who aspire to succeed in highly competitive examinations, including the UPSC and MPSC, and to pursue careers in senior government and civil service positions. They engage in rigorous study there throughout the year in pursuit of their academic and professional goals. The Pannya Metta Library has played a significant role in supporting the educational aspirations of countless students, many of whom have gone on to achieve success in competitive examinations and serve as senior government officers and public servants.<p>    
+      ${photoStrip(['pmsimg/lib1.2.jpeg','pmsimg/lib1.3.jpeg','pmsimg/lib1.4.jpeg','pmsimg/lib1.5.jpeg','pmsimg/lib1.6.jpeg'],'linear-gradient(135deg,#f5f3ff,#ede9fe)')}
+      <h4>Collection Highlights</h4>
+      <ul><li>Rare Buddhist manuscripts and Pali texts</li><li>Original editions of Dr. Ambedkar's complete works</li><li>Japanese Buddhist texts from Saichoji Temple</li><li>Social justice and community development literature</li></ul>
+      <div class="modal-tag-row"><span class="modal-tag">Pali Texts</span><span class="modal-tag">Dr. Ambedkar Works</span><span class="modal-tag">Open Library</span></div>`
+    },
+    ja: {
+      title: 'パンニャ・メッタ・サンガ図書館',
+      subtitle: '仏教知識センター',
+      body: `<div class="modal-hero-img"><img src="pmsimg/lib1.2.jpeg" alt="Library" onerror="this.parentNode.style.fontSize='5rem';this.parentNode.innerHTML='🏔️'"></div>
+      <p>パンニャ・メッタ図書館-1995年4月ポーニ町内中央部の民家を借り開設。後に同町アンベドカルスクエアの旧民家を購入したが、旧民家が老朽化、 洪水浸水によって倒壊したために、新館舎を建設、2006年に協会所有の新館舎が完成した。新聞雑誌著書等の閲覧の役割を果たすと同 時に、電気等インフラ設備も無く、 家庭内に幼い兄弟も多く、学習環境が整っていな い学生のために、終日利用できる学習室を用 意、教材を常置、無償で貸し出している。UPSC、MPSCと言った高等受験や上級公務員採用等を目指して、多くの学生が常時勉学に励んでいる。パンニャ・メッタ図書館で学習した多くの学生がその夢を叶えて、高級公務員となっている。</p>
+      ${photoStrip(['pmsimg/lib1.2.jpeg','pmsimg/lib1.3.jpeg','pmsimg/lib1.4.jpeg','pmsimg/lib1.5.jpeg','pmsimg/lib1.6.jpeg'],'linear-gradient(135deg,#f5f3ff,#ede9fe)')}`
+    }
+  }
+};
+
+const projectModalData = {
+  essay:{
+    en:{title:'Essay Competition',subtitle:'Annual Essay Competition',img:'pmsimg/essay1.2.jpeg',
+    body:`<p>Since its inception in 1995, the Essay Contest has been held annually in the     usually held around October each year. participants are invited to write on themes related to religion, current social issues, culture, and other topics of contemporary significance. Although there is no age restriction, the contest is especially intended to encourage the active participation of young people.The essays of the top three winners are published in the Hindi-language “Mahasamadhi,” magazine which is issued during the same period. The award recipients are honored at the MahaSamadhiBhoomi Dhammotsaw held on February 8, where they receive certificates of recognition, commemorative gifts, and cash prizes.</p>
+    <h4></li></ul>`},
+    ja:{title:'作文コンテスト',subtitle:'年次エッセイコンクール',img:'pmsimg/essay1.2.jpeg',
+    body:`<p>1995年開始以来毎年秋に行われ、それぞれの年に 問題視された宗教、 時事、文化等を題材に、 年齢制限を設けてはいないものの、 特に青年層の参加を待望して行っている。 上位三者の文は同時期にヒンディー語で発行している「マハサマ ディ」会報に掲載、三者を2月8日禅定林法要において表彰状、 記念品、 賞金を贈っている。</p>`}
+  },
+  cataract:{
+    en:{title:'Cataract Project',subtitle:'Free Eye Surgery for Rural Communities',img:'pmsimg/cataract.jpeg',
+    body:`<p>The Cataract Surgery Project provides free cataract operations for underprivileged people living in rural communities and urban slum areas. Since its inception in 2014, more than 300 patients have received surgery and recovered their vision, greatly improving their quality of life.</p>
+    <div></div>`},
+    ja:{title:'白内障プロジェクト',subtitle:'無料眼科手術',img:'pmsimg/cataract.jpeg',
+    body:`<p>白内障手術プロジェクト-このプロジェクトは、農村部および都市部のスラム街に暮らす貧困層を対象に、無料で白内障手術を施している。2014年の開始以来、300名以上が手術を受けて視力を回復し、日常生活の改善と自立した生活の実現に寄与しています。</p>`}
+  },
+  covid:{
+    en:{title:'Covid Aid',subtitle:'Emergency Relief During the Pandemic',img: 'pmsimg/cvd1.2.jpeg',photos:['pmsimg/cvd1.3.jpeg','pmsimg/cvd1.4.jpeg','pmsimg/cvd1.5.jpeg','pmsimg/cvd1.7.jpeg','pmsimg/cvd1.8.jpeg','pmsimg/cvd1.9.jpeg','pmsimg/cvd1.10.jpeg','pmsimg/cvd1.11.jpeg'],
+    body:`<p>During the COVID-19 pandemic, Pannya Metta Sangha distributed rations, masks, sanitisers, and medicines to affected communities.</p>
+    <h4>Relief Activities</h4><ul><li>Food ration kits for affected families</li><li>Masks and sanitisers for frontline communities</li><li>Medicines for the sick and elderly</li><li>Special support for Balsadan children during lockdown</li></ul>`},
+    ja:{title:'COVID支援',subtitle:'緊急救援',img: 'pmsimg/cvd1.2.jpeg',photos:['pmsimg/cvd1.3.jpeg','pmsimg/cvd1.4.jpeg','pmsimg/cvd1.5.jpeg','pmsimg/cvd1.7.jpeg','pmsimg/cvd1.8.jpeg','pmsimg/cvd1.9.jpeg','pmsimg/cvd1.10.jpeg','pmsimg/cvd1.11.jpeg'],
+    body:`<p>食料、マスク、消毒液、薬を配布。地方当局や医療従事者と協力しました。</p>`}
+  },
+  handpump:{
+    en:{title:'Hand Pump Facilities',subtitle:'Clean Water for Remote Villages',img:'pmsimg/hp1.2.jpeg',bg:'linear-gradient(135deg,#1e3a8a,#3b82f6)',photos:['pmsimg/hp1.3.jpeg','pmsimg/hp1.4.jpeg','pmsimg/hp1.5.jpeg','pmsimg/hp1.1.jpeg'],
+    body:`<p>Pannya Metta Sangha has installed hand pumps in remote villages of Bhandara and Gadchiroli districts, bringing clean water to communities that previously relied on contaminated sources.</p>
+    <h4>Impact</h4><ul><li>Multiple hand pumps installed across the region</li><li>Reduced waterborne diseases in beneficiary villages</li><li>Women and girls freed from long water-fetching walks</li></ul>`},
+    ja:{title:'手押しポンプ施設',subtitle:'清潔な水',img:'pmsimg/hp1.2.jpeg',photos:['pmsimg/hp1.3.jpeg','pmsimg/hp1.4.jpeg','pmsimg/hp1.5.jpeg','pmsimg/hp1.1.jpeg'],
+    body:`<p>バンダーラ・ガドチロリ地区の遠隔地に手押しポンプを設置。</p>`}
+  },
+  purnima:{
+    en:{title:'Every Purnima Sutra Pathan And Kheer Dan',subtitle:'Monthly Full Moon Sutra Recitation',img:'pmsimg/sutra1.2.jpeg',photos:['pmsimg/sutra1.3.jpeg','pmsimg/sutra1.4.jpeg','pmsimg/sutra1.5.jpeg','pmsimg/sutra1.1.jpeg'],
+    body:`<p>Every Purnima (full moon), the Sangha gathers the community for a collective recitation of Buddhist sutras — creating a regular rhythm of spiritual practice throughout the year.</p>
+    <h4>Program Details</h4><ul><li>Held on every Purnima throughout the year</li><li>Collective recitation of Vandana, Tri-Ratna, Panchashil</li><li>Open to all community members</li><li>Followed by dhamma discussion and community fellowship</li></ul>`},
+    ja:{title:'すべてのプルニマ・スートラ・パタンとキーア・ダン',subtitle:'月次満月経典読誦',img:'pmsimg/sutra1.2.jpeg',photos:['pmsimg/sutra1.3.jpeg','pmsimg/sutra1.4.jpeg','pmsimg/sutra1.5.jpeg','pmsimg/sutra1.1.jpeg'],
+    body:`<p>毎月満月の日にコミュニティが一堂に会し仏教経典を共同読誦します。</p>`}
+  },
+  vaishak:{
+    en:{title:'Vaishak Purnima Shibir',subtitle:'Annual Buddha Purnima Meditation Retreat',img:'pmsimg/shbr1.1.jpeg',photos:['pmsimg/shbr1.2.jpeg','pmsimg/shbr1.3.jpeg','pmsimg/shbr1.4.jpeg','pmsimg/shbr1.5.jpeg','pmsimg/shbr1.6.jpeg','pmsimg/shbr1.7.jpeg','pmsimg/shbr1.8.jpeg','pmsimg/shbr1.9.jpeg'],
+    body:`<p>Vaishak Purnima — the holiest day in the Buddhist calendar — is celebrated with an annual meditation retreat (Shibir).</p>
+    <h4>Retreat Program</h4><ul><li>Multi-day meditation retreat at Mahasamadhibhumi</li><li>Guided vipassana and samatha meditation sessions</li><li>Dhamma talks by Venerable Sangharatna Manake</li><li>Vandana and collective sutra recitation at the stupa</li></ul>`},
+    ja:{title:'ヴァイシャーク満月禅修会',subtitle:'年次仏陀誕生日瞑想リトリート',img:'pmsimg/shbr1.1.jpeg',photos:['pmsimg/shbr1.2.jpeg','pmsimg/shbr1.3.jpeg','pmsimg/shbr1.4.jpeg','pmsimg/shbr1.5.jpeg','pmsimg/shbr1.6.jpeg','pmsimg/shbr1.7.jpeg','pmsimg/shbr1.8.jpeg','pmsimg/shbr1.9.jpeg'],
+    body:`<p>仏教暦で最も神聖な日、ヴァイシャーク満月に開催される年次瞑想リトリート。</p>`}
+  },
+  dharmatalks:{
+    en:{title:' Online Dharma Talks',subtitle:'Dharma Talks',img:'pmsimg/odt1.2.jpeg',photos:['pmsimg/odt1.3.jpeg','pmsimg/odt1.4.jpeg','pmsimg/odt1.5.jpeg'],
+    body:`<p>Taking the COVID-19 pandemic and the resulting restrictions on travel and public gatherings as an opportunity, an online     Sermon program was launched in July 2021. Since then, practical Dharma teachings applicable to daily life have been delivered in Hindi every Sunday from 10:00 a.m. to 11:00 a.m. (India time). To date, more than 245 sessions have been conducted.</p>
+    <h4></li></ul>`},
+    ja:{title:'オンライン法話',subtitle:'法話',img:'pmsimg/odt1.2.jpeg',photos:['pmsimg/odt1.3.jpeg','pmsimg/odt1.4.jpeg','pmsimg/odt1.5.jpeg'],
+    body:`<p>コロナによって外出できない状況を機に、2021年7月から開始、日常に生かされる内容の法話を、オンラインで毎週日曜日インドの時間午前10時から11時までヒンディー語でしており、245回を超えている。</p>`}
+  },
+  mobilehospital:{
+    en:{title:'Mobile Hospitals',subtitle:'Healthcare to Remote Communities',img:'pmsimg/mh1.7.jpeg',photos:['pmsimg/mh1.2.jpeg','pmsimg/mh1.3.jpeg','pmsimg/mh1.4.jpeg','pmsimg/mh1.5.jpeg','pmsimg/mh1.6.jpeg'],
+    body:`<p><strong>Mobile Healthcare Services in Tribal Areas</strong></p>
+    <p>A mobile medical outreach program is conducted primarily in Sironcha, Gadchiroli District, where indigenous tribal communities make up the majority of the population. The program visits remote villages with limited access to basic healthcare services and provides free medical consultations, treatment, and medicines to local residents.</p>
+    <h4></li></ul>`},
+    ja:{title:'移動病院',subtitle:'シロンチャ、ガドチロリへの医療',img: 'pmsimg/mh1.7.jpeg',photos:['pmsimg/mh1.2.jpeg','pmsimg/mh1.3.jpeg','pmsimg/mh1.4.jpeg','pmsimg/mh1.5.jpeg','pmsimg/mh1.6.jpeg'],
+    body:`<p>マハーラーシュトラ州で最も孤立した部族地域の遠隔地の村に医療チームを派遣。</p>`}
+  },
+  treeplant:{
+    en:{title:'Tree Plantation',subtitle:'Nurturing a Greener Future',img:'pmsimg/tp1.2.jpeg' ,photos:['pmsimg/tp1.3.jpeg','pmsimg/tp1.4.jpeg','pmsimg/tp1.5.jpeg','pmsimg/tp1.6.jpeg','pmsimg/tp1.7.jpeg','pmsimg/tp1.8.jpeg','pmsimg/tp1.9.jpeg'],
+    body:`<p>Tree plantation drives are a regular community service activity, reflecting Buddhist respect for nature. Mass tree planting is organised in and around Pauni, Nagpur, and the Mahasamadhibhumi grounds.</p>
+    <h4>Activities</h4><ul><li>Annual mass tree plantation on Buddha Jayanti and Ambedkar Jayanti</li><li>School students, volunteers, and community members participate</li><li>Follow-up watering and care programs</li></ul>`},
+    ja:{title:'植樹活動',subtitle:'緑豊かな未来を育む',img:'pmsimg/tp1.2.jpeg',photos:['pmsimg/tp1.3.jpeg','pmsimg/tp1.4.jpeg','pmsimg/tp1.5.jpeg','pmsimg/tp1.6.jpeg','pmsimg/tp1.7.jpeg','pmsimg/tp1.8.jpeg','pmsimg/tp1.9.jpeg'],
+    body:`<p><strong>源住民居住地における巡回医療活動</strong></p>
+    <p>源住部族が大多数をしめる、ガルチロリ県シロンチャを中心に、最低限の医療、診療からも置き去りにされている人たちの村々を巡回、診察、治 療 、投薬を無料で行なっている 。<p>`}
+  },
+  umbrella:{
+    en:{title:'Umbrella Donations',subtitle:'Dignity in Every Season',img:'pmsimg/ud1.2.jpeg',photos:['pmsimg/ud1.2.jpeg','pmsimg/ud1.3.jpeg','pmsimg/ud1.4.jpeg','pmsimg/ud1.1.jpeg'],
+    body:`<p>Every year before the monsoon, Pannya Metta Sangha distributes umbrellas to students, underprivileged families, and community members.</p>
+    <h4>Distribution Reach</h4><ul><li>Students from low-income families</li><li>Women and elderly community members</li><li>Tribal communities in remote areas</li><li>Children at Balsadan receive umbrellas annually</li></ul>`},
+    ja:{title:'傘の寄贈',subtitle:'すべての季節の尊厳',img:'pmsimg/ud1.2.jpeg',photos:['pmsimg/ud1.2.jpeg','pmsimg/ud1.3.jpeg','pmsimg/ud1.4.jpeg','pmsimg/ud1.1.jpeg'],
+    body:`<p>毎年モンスーン前に、学生、恵まれない家族への傘の配布を組織します。</p>`}
+  },
+  emergency:{
+    en:{title:'Emergency Relief Activities',subtitle:'Cross-State Humanitarian Operations',img:'pmsimg/relief1.1.jpeg',
+    body:`<p>Emergency relief and rehabilitation activities have been conducted in regions affected by major disasters, including the 2001 Western India Earthquake, the 2004 Indian Ocean Tsunami, the 2011 Great East Japan Earthquake, the 2014 Kashmir Floods, the 2015 Nepal Earthquake, and the 2016 Kumamoto Earthquake. The activities encompass memorial services for the deceased, along with assistance in education, medical care, and the restoration of daily life for disaster survivors.</p>
+    <h4></li></ul>`},
+    ja:{title:'緊急支援活動',subtitle:'災害救援',img:'pmsimg/relief1.1.jpeg',
+    body:`<p>2001年の西部インド大地震、2004年のインド洋大津波、2011年の東日本大震災、2014年のカシミール大洪水、2015年のネパール大地震、2016年の熊本地震をはじめとする大規模災害の被災地域において、緊急支援および復興支援活動を行っています。これらの活動では、犠牲者への慰霊法要の厳修をはじめ、被災者に対する教育支援、医療支援、ならびに日常生活の再建に向けた支援を実施しています。</p>`}
+  },
+  oneday:{
+    en:{title:'One Day Medical Camp',subtitle:'Free Healthcare for All',img:'pmsimg/mh1.4.jpeg',
+    body:`<p>Around December 2, the anniversary of the establishment of PMS Pannya Metta Sangha, free medical camps are conducted in rural areas such as Ruyad Village, where MahaSamadhiBhoomi is located, with the cooperation of medical professionals specializing in ophthalmology, otolaryngology (ear, nose, and throat care) and other fields</p>
+    <h4></li></ul>`},
+    ja:{title:'一日医療キャンプ',subtitle:'すべてのための無料医療',img:'pmsimg/oneday.jpeg',
+    body:`<p>一日診療-PMSパンニャ・メッタメッタ・サンガ発足日である12月2日前後に眼、耳鼻咽喉科等医療従事者の協力を得て、禅定林のあるルヤード村等の農村部で無料診療を行なっている。</p>`}
+  },
+  clothes:{
+    en:{title:'Clothes Distribution',subtitle:'Dignity Through Giving',img: 'pmsimg/cd0.2.jpeg',photos:['pmsimg/cd1.1.jpeg','pmsimg/cd1.2.jpeg','pmsimg/cd1.3.jpeg','pmsimg/cd1.4.jpeg'],
+    body:`<p>Every year, Pannya Metta Sangha distributes clothes and bedding to the needy, Balsadan children, and tribal communities — an expression of Dana (generosity).</p>
+    <h4>Distribution Includes</h4><ul><li>New and donated clothes for children, women, and men</li><li>Blankets and bedding for cold winter months</li><li>School uniforms for underprivileged students</li><li>Special sets for Balsadan children</li></ul>`},
+    ja:{title:'衣類配布',subtitle:'布施を通じた尊厳',img: 'pmsimg/cd0.2.jpeg',photos:['pmsimg/cd1.1.jpeg','pmsimg/cd1.2.jpeg','pmsimg/cd1.3.jpeg','pmsimg/cd1.4.jpeg',],
+    body:`<p>貧困者、バルサダンの子どもたち、部族コミュニティへの年次衣類・寝具配布。</p>`}
+  },
+  blood:{
+    en:{title:'Blood Donation Camps',subtitle:'The Gift of Life',img: 'pmsimg/bd1.2.jpeg',photos:['pmsimg/bd1.3.jpeg','pmsimg/bd1.4.jpeg','pmsimg/bd1.5.jpeg','pmsimg/bd1.1.jpeg'],
+    body:`<p>Blood donation camps are organised by Sangha volunteers across Nagpur, Bhandara, and surrounding areas.</p>
+    <h4>Program Details</h4><ul><li>Regular drives — multiple times per year</li><li>Coordination with local hospitals and blood banks</li><li>Special drives at Dhammasangoshti and Vaishak Purnima events</li></ul>`},
+    ja:{title:'献血キャンプ',subtitle:'命の贈り物',img: 'pmsimg/bd1.2.jpeg',photos:['pmsimg/bd1.3.jpeg','pmsimg/bd1.4.jpeg','pmsimg/bd1.5.jpeg','pmsimg/bd1.1.jpeg'],
+    body:`<p>パンニャ・メッタ・サンガボランティアによる定期的な献血ドライブ。</p>`}
+  },
+  yatra:{
+    en:{title:'Vishwa Shanti Dhamma Yatra',subtitle:'Pilgrimage for World Peace',img:'pmsimg/vsy1.2.jpeg',photos:['pmsimg/vsy1.3.jpeg','pmsimg/vsy1.4.jpeg','pmsimg/vsy1.5.jpeg','pmsimg/vsy1.6.jpeg'],
+    body:`<p>The Vishwa Shanti Dhamma Yatra is a sacred journey to spread the message of the Buddha's teaching of peace, non-violence, and universal brotherhood.</p>
+    <h4>Yatra Highlights</h4><ul><li>Pilgrimage to major Buddhist sites — Bodh Gaya, Sarnath, Nagpur, Deekshabhoomi</li><li>Community prayers and Vandana ceremonies</li><li>Dhamma talks and peace messages at every stop</li><li>Youth participation and educational components</li></ul>`},
+    ja:{title:'世界平和ダンマ巡礼',subtitle:'世界平和のための神聖な旅',img:'pmsimg/vsy1.2.jpeg',photos:['pmsimg/vsy1.3.jpeg','pmsimg/vsy1.4.jpeg','pmsimg/vsy1.5.jpeg','pmsimg/vsy1.6.jpeg'],
+    body:`<p>仏陀の平和、非暴力、普遍的友愛の教えのメッセージを広める神聖な巡礼。</p>`}
+  }
+};
+
+function openModal(key) {
+  const lang = isJa() ? 'ja' : 'en';
+  const d = modalData[key][lang];
+  document.getElementById('modalTitle').textContent = d.title;
+  document.getElementById('modalSubtitle').textContent = d.subtitle;
+  document.getElementById('modalBody').innerHTML = d.body;
+  document.getElementById('modalOverlay').classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+
+function openProjectModal(key) {
+  const lang = isJa() ? 'ja' : 'en';
+  const d = projectModalData[key][lang];
+  const photosHtml = d.photos ? `<h4>Photo Gallery</h4><div class="modal-photo-strip">${d.photos.map((src,i)=>`<div class="ps-img" style="background:${d.bg};"><img src="${src}" alt="Photo ${i+1}" onerror="this.style.display='none'"></div>`).join('')}</div>` : '';
+const heroHtml = d.img? `<div class="modal-hero-img"><img src="${d.img}" alt="${d.title}"onerror="this.parentNode.innerHTML='📷'"></div>`: `<div style="width:100%;height:140px;border-radius:12px;background:${d.bg};display:flex;align-items:center;justify-content:center;font-size:4rem;margin-bottom:20px;">${d.icon || '📷'}</div>`;  document.getElementById('modalTitle').textContent = d.title;
+  document.getElementById('modalSubtitle').textContent = d.subtitle;
+  document.getElementById('modalBody').innerHTML = heroHtml + d.body + photosHtml;
+  document.getElementById('modalOverlay').classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+
+function closeModal() {
+  document.getElementById('modalOverlay').classList.remove('open');
+  document.body.style.overflow = '';
+}
+function handleModalClick(e) {
+  if (e.target === document.getElementById('modalOverlay')) closeModal();
+}
+
+document.addEventListener('keydown', e => {
+  if (e.key === 'Escape') closeModal();
+});
+
+/* Projects grid responsive */
+function updateProjectsGrid() {
+  const grid = document.getElementById('projectsCardsGrid');
+  if (!grid) return;
+  const w = window.innerWidth;
+  if (w < 600) grid.style.gridTemplateColumns = '1fr';
+  else if (w < 900) grid.style.gridTemplateColumns = 'repeat(2,1fr)';
+  else if (w < 1200) grid.style.gridTemplateColumns = 'repeat(3,1fr)';
+  else grid.style.gridTemplateColumns = 'repeat(4,1fr)';
+}
+window.addEventListener('resize', updateProjectsGrid);
+updateProjectsGrid();
+</script>
+</body>
+</html>
